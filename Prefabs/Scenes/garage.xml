@@ -102,20 +102,5 @@
 				<exponent value="0.0"/>
 			</light>
 		</gameObject>
-		<gameObject name="DirLight">
-			<transform>
-				<position x="1" y="2" z="0"/>
-				<rotation x="0" y="0" z="0"/>
-				<scale x="1" y="1" z="1"/>
-			</transform>
-			<light>
-				<color r="0.2" g="0.2" b="0.2"/>
-				<distribution x="0.5" y="0.6" z="0.5"/>
-				<point bool="0.0"/>
-				<direction x="0.0" y="-1.0" z="1.5"/>
-				<cosCutOff value="0.0"/>
-				<exponent value="0.0"/>
-			</light>
-		</gameObject>
 	</gameObjects>
 </scene>
