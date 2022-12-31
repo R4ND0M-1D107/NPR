@@ -93,6 +93,9 @@
     <ClCompile Include="include\pugixml\pugixml.cpp">
       <Filter>Header Files\pugixml</Filter>
     </ClCompile>
+    <ClCompile Include="packages\pugixml.1.13.0\build\native\include\pugixml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\RenderingManager.h">
@@ -155,20 +158,247 @@
     <ClInclude Include="include\pugixml\pugixml.hpp">
       <Filter>Header Files\pugixml</Filter>
     </ClInclude>
+    <ClInclude Include="packages\pugixml.1.13.0\build\native\include\pugiconfig.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="packages\pugixml.1.13.0\build\native\include\pugixml.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\gBuffer-fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Textures\Wood\WoodWhiteAlbedo.jpg~" />
+    <None Include="Textures\Wood\WoodAlbedo.jpg~" />
+    <None Include="Textures\Glass\glass.png~" />
+    <None Include="Textures\Planks\PlanksAlbedo.png~" />
+    <None Include="Textures\Plaster\PlasterNormal.jpg~" />
     <None Include="shaders\default-fs.glsl">
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\default-vs.glsl">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="shaders\gBuffer-fs.glsl">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="shaders\gBuffer-vs.glsl">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="packages.config" />
+    <None Include="shaders\outlineCross-fs.glsl" />
+    <None Include="shaders\phong-fs.glsl" />
+    <None Include="shaders\tonemapping-fs.glsl" />
+    <None Include="shaders\toScreen.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\white.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\black.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\hexMetal_basecolor.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\hexMetal_normal.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\metalFloorAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\normalDefault.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\sparkFlipbook.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Wood\WoodWhiteAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Wood\WoodAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Wood\WoodBlueAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Wood\WoodCyanAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Wood\WoodLightAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Wood\WoodMask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Wood\WoodNormal.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\carMat\diffuse.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\carMat\emission.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\carMat\mask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\carMat\metallic.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\carMat\normal.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\carMat\roughness.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\carMat\specular.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Concrete\ConcreteAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Concrete\ConcreteMask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Concrete\ConcreteNormal.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GalvanizedMetal\Metal_Galvanized_001_basecolor.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GalvanizedMetal\Metal_Galvanized_001_mask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GalvanizedMetal\Metal_Galvanized_001_normal.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GasPlanet\albedo.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GasPlanet\flowmap.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GasPlanet\gradient.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GasPlanet\gradient1.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Glass\glass.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Glass\glassLitMask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GunMetal\BrassAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GunMetal\BrassAlbedo.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GunMetal\GunMetalAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GunMetal\GunMetalAlbedo.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GunMetal\GunMetalMask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GunMetal\GunMetalNormal.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\GunMetal\GunMetalNormal.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\HexPlastic\hexPlasticMask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\HexPlastic\hexPlasticNormal.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Planks\PlanksAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Planks\PlanksAlbedo.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Planks\PlanksMask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Planks\PlanksNormal.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Planks\PlanksNormal.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Plaster\PlasterAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Plaster\PlasterAlbedo.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Plaster\PlasterMask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Plaster\PlasterNormal.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Plaster\PlasterNormal.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Shield\noiseFractal1.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Shield\noiseFractal2.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Shield\shield.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\bkg1_back6.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\bkg1_bottom4.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\bkg1_front5.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\bkg1_left2.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\bkg1_right1.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\SquareFloor\LitMask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\SquareFloor\SquareFloor_basecolor.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\SquareFloor\SquareFloor_normal.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\StylWood\StylWoodAlbedo.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\StylWood\StylWoodMask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\StylWood\StylWoodNormal.jpg">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\TriangleWall\LitMask.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\TriangleWall\triangularWall_basecolor.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\TriangleWall\triangularWall_normal.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Skybox\bkg1_top3.png">
+      <Filter>Shaders\Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

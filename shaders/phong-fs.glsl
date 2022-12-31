@@ -103,7 +103,7 @@ void main()
 	}
 	albedoColor.a = texture(screenTexture, UV).a;
 
-    fragmentColor = albedoColor;
+    fragmentColor = albedoColor.rrra;
     normalColor = vec4(texture(normalTexture, UV).xyz, 1.0);
     emissionColor = vec4(texture(emissionTexture, UV).xyz, 1.0);
     maskColor = vec4(texture(maskTexture, UV).xyz, 1.0);

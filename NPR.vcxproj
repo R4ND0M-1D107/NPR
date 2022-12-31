@@ -152,11 +152,13 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>pgr.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(PGR_FRAMEWORK_ROOT)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\pugixml\pugixml.cpp" />
     <ClCompile Include="Models\sphere.cpp" />
+    <ClCompile Include="packages\pugixml.1.13.0\build\native\include\pugixml.cpp" />
     <ClCompile Include="source\Components\Camera.cpp" />
     <ClCompile Include="source\Components\CameraController.cpp" />
     <ClCompile Include="source\Components\Component.cpp" />
@@ -196,13 +198,124 @@
     <ClInclude Include="include\Shading\Shader.h" />
     <ClInclude Include="include\UpdateManager.h" />
     <ClInclude Include="Models\sphere.h" />
+    <ClInclude Include="packages\pugixml.1.13.0\build\native\include\pugiconfig.hpp" />
+    <ClInclude Include="packages\pugixml.1.13.0\build\native\include\pugixml.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="shaders\default-fs.glsl" />
-    <None Include="shaders\default-vs.glsl" />
+    <None Include="shaders\default-fs.glsl">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </None>
+    <None Include="shaders\default-vs.glsl">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </None>
     <None Include="shaders\gBuffer-fs.glsl" />
-    <None Include="shaders\gBuffer-vs.glsl" />
+    <None Include="shaders\gBuffer-vs.glsl">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </None>
+    <None Include="shaders\outlineCross-fs.glsl">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </None>
+    <None Include="shaders\phong-fs.glsl">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </None>
+    <None Include="shaders\tonemapping-fs.glsl">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </None>
+    <None Include="shaders\toScreen.glsl">
+      <DeploymentContent>true</DeploymentContent>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </None>
+    <None Include="Textures\Glass\glass.png~" />
+    <None Include="Textures\Planks\PlanksAlbedo.png~" />
+    <None Include="Textures\Plaster\PlasterNormal.jpg~" />
+    <None Include="Textures\Wood\WoodAlbedo.jpg~" />
+    <None Include="Textures\Wood\WoodWhiteAlbedo.jpg~" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\black.png" />
+    <Image Include="Textures\carMat\diffuse.png" />
+    <Image Include="Textures\carMat\emission.png" />
+    <Image Include="Textures\carMat\mask.png" />
+    <Image Include="Textures\carMat\metallic.png" />
+    <Image Include="Textures\carMat\normal.png" />
+    <Image Include="Textures\carMat\roughness.png" />
+    <Image Include="Textures\carMat\specular.png" />
+    <Image Include="Textures\Concrete\ConcreteAlbedo.jpg" />
+    <Image Include="Textures\Concrete\ConcreteMask.png" />
+    <Image Include="Textures\Concrete\ConcreteNormal.jpg" />
+    <Image Include="Textures\GalvanizedMetal\Metal_Galvanized_001_basecolor.jpg" />
+    <Image Include="Textures\GalvanizedMetal\Metal_Galvanized_001_mask.png" />
+    <Image Include="Textures\GalvanizedMetal\Metal_Galvanized_001_normal.jpg" />
+    <Image Include="Textures\GasPlanet\albedo.png" />
+    <Image Include="Textures\GasPlanet\flowmap.png" />
+    <Image Include="Textures\GasPlanet\gradient.png" />
+    <Image Include="Textures\GasPlanet\gradient1.png" />
+    <Image Include="Textures\Glass\glass.png" />
+    <Image Include="Textures\Glass\glassLitMask.png" />
+    <Image Include="Textures\GunMetal\BrassAlbedo.jpg" />
+    <Image Include="Textures\GunMetal\BrassAlbedo.png" />
+    <Image Include="Textures\GunMetal\GunMetalAlbedo.jpg" />
+    <Image Include="Textures\GunMetal\GunMetalAlbedo.png" />
+    <Image Include="Textures\GunMetal\GunMetalMask.png" />
+    <Image Include="Textures\GunMetal\GunMetalNormal.jpg" />
+    <Image Include="Textures\GunMetal\GunMetalNormal.png" />
+    <Image Include="Textures\hexMetal_basecolor.png" />
+    <Image Include="Textures\hexMetal_normal.png" />
+    <Image Include="Textures\HexPlastic\hexPlasticMask.png" />
+    <Image Include="Textures\HexPlastic\hexPlasticNormal.jpg" />
+    <Image Include="Textures\metalFloorAlbedo.jpg" />
+    <Image Include="Textures\normalDefault.png" />
+    <Image Include="Textures\Planks\PlanksAlbedo.jpg" />
+    <Image Include="Textures\Planks\PlanksAlbedo.png" />
+    <Image Include="Textures\Planks\PlanksMask.png" />
+    <Image Include="Textures\Planks\PlanksNormal.jpg" />
+    <Image Include="Textures\Planks\PlanksNormal.png" />
+    <Image Include="Textures\Plaster\PlasterAlbedo.jpg" />
+    <Image Include="Textures\Plaster\PlasterAlbedo.png" />
+    <Image Include="Textures\Plaster\PlasterMask.png" />
+    <Image Include="Textures\Plaster\PlasterNormal.jpg" />
+    <Image Include="Textures\Plaster\PlasterNormal.png" />
+    <Image Include="Textures\Shield\noiseFractal1.png" />
+    <Image Include="Textures\Shield\noiseFractal2.png" />
+    <Image Include="Textures\Shield\shield.png" />
+    <Image Include="Textures\Skybox\bkg1_back6.png" />
+    <Image Include="Textures\Skybox\bkg1_bottom4.png" />
+    <Image Include="Textures\Skybox\bkg1_front5.png" />
+    <Image Include="Textures\Skybox\bkg1_left2.png" />
+    <Image Include="Textures\Skybox\bkg1_right1.png" />
+    <Image Include="Textures\Skybox\bkg1_top3.png" />
+    <Image Include="Textures\sparkFlipbook.png" />
+    <Image Include="Textures\SquareFloor\LitMask.png" />
+    <Image Include="Textures\SquareFloor\SquareFloor_basecolor.png" />
+    <Image Include="Textures\SquareFloor\SquareFloor_normal.png" />
+    <Image Include="Textures\StylWood\StylWoodAlbedo.jpg" />
+    <Image Include="Textures\StylWood\StylWoodMask.png" />
+    <Image Include="Textures\StylWood\StylWoodNormal.jpg" />
+    <Image Include="Textures\TriangleWall\LitMask.png" />
+    <Image Include="Textures\TriangleWall\triangularWall_basecolor.png" />
+    <Image Include="Textures\TriangleWall\triangularWall_normal.png" />
+    <Image Include="Textures\white.png" />
+    <Image Include="Textures\Wood\WoodAlbedo.jpg" />
+    <Image Include="Textures\Wood\WoodBlueAlbedo.jpg" />
+    <Image Include="Textures\Wood\WoodCyanAlbedo.jpg" />
+    <Image Include="Textures\Wood\WoodLightAlbedo.jpg" />
+    <Image Include="Textures\Wood\WoodMask.png" />
+    <Image Include="Textures\Wood\WoodNormal.jpg" />
+    <Image Include="Textures\Wood\WoodWhiteAlbedo.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
