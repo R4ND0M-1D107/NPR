@@ -1,0 +1,4 @@
+texture albedoTexture Textures/Wood/WoodWhiteAlbedo.jpg
+texture normalTexture Textures/Wood/WoodNormal.jpg
+texture emissionTexture Textures/black.png
+texture maskTexture Textures/Wood/WoodMask.png

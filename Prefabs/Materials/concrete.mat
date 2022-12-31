@@ -1,0 +1,4 @@
+texture albedoTexture Textures/Concrete/ConcreteAlbedo.jpg
+texture normalTexture Textures/Concrete/ConcreteNormal.jpg
+texture emissionTexture Textures/black.png
+texture maskTexture Textures/Concrete/ConcreteMask.png

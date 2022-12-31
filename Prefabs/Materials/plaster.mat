@@ -1,0 +1,4 @@
+texture albedoTexture Textures/Plaster/PlasterAlbedo.png
+texture normalTexture Textures/Plaster/PlasterNormal.png
+texture emissionTexture Textures/black.png
+texture maskTexture Textures/Plaster/PlasterMask.png
