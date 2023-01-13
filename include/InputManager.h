@@ -21,3 +21,5 @@ bool IsKeyDown(char key);
 Keys AreSpecialKeyDown();
 glm::vec2 GetMouseDelta();
 void AddMouseListener(Component* listener);
+
+void RemoveMouseListener(Component* listener);

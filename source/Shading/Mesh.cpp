@@ -59,6 +59,10 @@ Mesh::Mesh(int _objectNAttribsPerVertex, int _objectNVertices, int _objectNTrian
 	objectTriangles = _objectTriangles;
 }
 
+Mesh::~Mesh()
+{
+}
+
 void Mesh::setup(Shader* shader)
 {
 	//vertex positions

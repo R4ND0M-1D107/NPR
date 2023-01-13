@@ -25,12 +25,12 @@ struct Light
 uniform Light lights[4];
 uniform vec3 viewerPosition;
 
-out vec4 fragmentColor;
-out vec4 normalColor;
-out vec4 emissionColor;
-out vec4 maskColor;
-out vec4 posColor;
-out vec4 uvColor;
+layout(location = 0) out vec4 fragmentColor;
+layout(location = 1) out vec4 normalColor;
+layout(location = 2) out vec4 emissionColor;
+layout(location = 3) out vec4 maskColor;
+layout(location = 4) out vec4 posColor;
+layout(location = 5) out vec4 uvColor;
 
 vec3 SampleNormalTexture(sampler2D normalTex, vec2 UV)
 {
@@ -103,7 +103,7 @@ void main()
 	}
 	albedoColor.a = texture(screenTexture, UV).a;
 
-    fragmentColor = albedoColor.rrra;
+    fragmentColor = albedoColor;
     normalColor = vec4(texture(normalTexture, UV).xyz, 1.0);
     emissionColor = vec4(texture(emissionTexture, UV).xyz, 1.0);
     maskColor = vec4(texture(maskTexture, UV).xyz, 1.0);

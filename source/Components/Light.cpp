@@ -7,6 +7,7 @@ std::vector<Light*> Light::activeLights = std::vector<Light*>();
 
 Light::Light(GameObject* owner, pugi::xml_node xmlNode) : Component(owner)
 {
+	name = "light";
 	activeLights.push_back(this);
 	color = glm::vec3(xmlNode.child("color").attribute("r").as_float(), xmlNode.child("color").attribute("g").as_float(), xmlNode.child("color").attribute("b").as_float());
 	distribution = glm::vec3(xmlNode.child("distribution").attribute("x").as_float(), xmlNode.child("distribution").attribute("y").as_float(), xmlNode.child("distribution").attribute("z").as_float());
@@ -29,4 +30,9 @@ std::vector<Light*> Light::GetAllLights()
 glm::vec4 Light::getPosition()
 {
 	return glm::vec4(this->gameObject->transform->position, point);
+}
+
+void Light::ClearLights()
+{
+	activeLights.clear();
 }

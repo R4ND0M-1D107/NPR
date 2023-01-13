@@ -20,6 +20,11 @@ void AddUpdatable(Component* updatable)
 	updatables.push_back(updatable);
 }
 
+void UpdateManagerClear()
+{
+	updatables.clear();
+}
+
 void RemoveUpdatable(Component* updatable)
 {
 	updatables.erase(std::remove(updatables.begin(), updatables.end(), updatable), updatables.end());

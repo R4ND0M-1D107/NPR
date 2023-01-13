@@ -7,6 +7,7 @@ class Component
 {
 public:
 	Component(GameObject* owner);
+	virtual ~Component();
 	GameObject* gameObject;
 	std::string name = "undefined";
 	virtual void Update(float deltaTime);

@@ -1,10 +1,10 @@
 #version 330
-out vec4 fragmentColor;
-out vec4 normalColor;
-out vec4 emissionColor;
-out vec4 maskColor;
-out vec4 posColor;
-out vec4 uvColor;
+layout(location = 0) out vec4 fragmentColor;
+layout(location = 1) out vec4 normalColor;
+layout(location = 2) out vec4 emissionColor;
+layout(location = 3) out vec4 maskColor;
+layout(location = 4) out vec4 posColor;
+layout(location = 5) out vec4 uvColor;
 
 in vec2 UV;
 in mat3 TBN;

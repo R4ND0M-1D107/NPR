@@ -18,4 +18,5 @@ public:
 	float cosCutOff;
 	float exponent; //spotExponent or attenuation
 	static std::vector<Light*> GetAllLights();
+	static void ClearLights();
 };

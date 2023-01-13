@@ -7,6 +7,10 @@ Component::Component(GameObject* owner)
 	owner->AddComponent(this);
 }
 
+Component::~Component()
+{
+}
+
 void Component::Update(float deltaTime)
 {
 }

@@ -5,6 +5,7 @@
 
 Camera::Camera(GameObject* owner) : Component(owner)
 {
+	name = "camera";
 	SetMainCamera(this);
 }
 
@@ -35,4 +36,8 @@ glm::mat4 Camera::GetViewMatrix()
 	//front = normalize(front);
 
 	return glm::lookAt(this->gameObject->transform->position, this->gameObject->transform->position + front, up);
+}
+
+Camera::~Camera()
+{
 }

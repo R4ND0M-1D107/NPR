@@ -61,7 +61,7 @@ Shader::Shader(std::string txt)
 			if (type == "out")
 			{
 
-				glBindFragDataLocation(program, location, name.c_str());
+				//glBindFragDataLocation(program, location, name.c_str());
 				CHECK_GL_ERROR();
 			}
 			else if (type == "attribute")
@@ -83,6 +83,7 @@ Shader::Shader(std::string txt)
 			{
 				pgr::dieWithError("Invalid shader definition");
 			}
+			//printf("%s %d %s\n", txt.c_str(), location, name.c_str());
 			locations.insert(std::pair<std::string, GLint>(name, location));
 		}
 	}
@@ -94,6 +95,10 @@ void Shader::SetMatrices(glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::
 	glUniformMatrix4fv(locations["projectionMatrix"], 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 	glUniformMatrix4fv(locations["viewMatrix"], 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(locations["modelMatrix"], 1, GL_FALSE, glm::value_ptr(modelMatrix));
+}
+
+Shader::~Shader()
+{
 }
 
 void Shader::SetLights(std::vector<Light*> lightComponents)
@@ -114,15 +119,21 @@ void Shader::UseMaterial(Material* material)
 	int i = 0;
 	for (auto const& tex : material->textures)
 	{
-		glUniform1i(this->locations[tex.first], i);
 		glActiveTexture(GL_TEXTURE0+i);
 		glBindTexture(GL_TEXTURE_2D, tex.second);
+		glUniform1i(this->locations[tex.first], i);
 		i++;
 	}
 
 	for (auto const& floatNum : material->floats)
 	{
 		glUniform1f(this->locations[floatNum.first], floatNum.second);
+		i++;
+	}
+
+	for (auto const& vec2 : material->vec2s)
+	{
+		glUniform2fv(this->locations[vec2.first], 1, glm::value_ptr(vec2.second));
 		i++;
 	}
 

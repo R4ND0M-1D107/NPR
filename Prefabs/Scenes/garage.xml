@@ -16,6 +16,7 @@
 		<material name="concrete" path="./Prefabs/Materials/concrete.mat"/>
 		<material name="plaster" path="./Prefabs/Materials/plaster.mat"/>
 		<material name="brass" path="./Prefabs/Materials/brass.mat"/>
+		<material name="light" path="./Prefabs/Materials/light.mat"/>
 	</materials>
 	<meshes>
 		<mesh name="car" path="./Models/car.obj"/>
@@ -35,9 +36,20 @@
 		<mesh name="garage-wall" path="./Models/Garage/garageWall.obj"/>
 		<mesh name="garage-window" path="./Models/Garage/garageWindow.obj"/>
 		<mesh name="shelf" path="./Models/shelf.obj"/>
+		<mesh name="lightBase" path="./Models/Garage/Light/lightBase.obj"/>
+		<mesh name="lightEmit" path="./Models/Garage/Light/lightEmit.obj"/>
 	</meshes>
 	<postProcessing>
-		<effect shader="./Prefabs/Shaders/phong.shader" material="./Prefabs/Materials/phong.mat"/>
+		<effect shader="./Prefabs/Shaders/hatching.shader" material="./Prefabs/Materials/phong.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/lightComposition.shader" material="./Prefabs/Materials/gBuffer.mat"/>
 		<effect shader="./Prefabs/Shaders/Tonemapping.shader" material="./Prefabs/Materials/gBuffer.mat"/>
 		<effect shader="./Prefabs/Shaders/OutlineCross.shader" material="./Prefabs/Materials/outlineCross.mat"/>
 	</postProcessing>
@@ -54,7 +66,7 @@
 		</gameObject>
 		<gameObject name="Counter">
 			<transform>
-				<position x="5" y="0" z="0"/>
+				<position x="0" y="0" z="0"/>
 				<rotation x="0" y="0" z="0"/>
 				<scale x="1" y="1" z="1"/>
 			</transform>		
@@ -66,7 +78,7 @@
 		</gameObject>
 		<gameObject name="Garage">
 			<transform>
-				<position x="5" y="0" z="0"/>
+				<position x="0" y="0" z="0"/>
 				<rotation x="0" y="0" z="0"/>
 				<scale x="1" y="1" z="1"/>
 			</transform>
@@ -79,28 +91,64 @@
 			<renderer shader="default" material="plaster" mesh="garage-wall"/>
 			<renderer shader="default" material="metal" mesh="garage-window"/>
 		</gameObject>
-		<gameObject name="Shelf">
+		<gameObject name="Light1">
 			<transform>
-				<position x="6.77101" y="0.413546" z="-0.077173"/>
-				<rotation x="0" y="0" z="0"/>
-				<scale x="1" y="1" z="1"/>
-			</transform>		
-			<renderer shader="default" material="metal" mesh="shelf"/>
-		</gameObject>
-		<gameObject name="PointLight">
-			<transform>
-				<position x="6.77101" y="0.413546" z="-0.077173"/>
+				<position x="0" y="0" z="0"/>
 				<rotation x="0" y="0" z="0"/>
 				<scale x="1" y="1" z="1"/>
 			</transform>
+			<renderer shader="default" material="metal" mesh="lightBase"/>
+			<renderer shader="default" material="light" mesh="lightEmit"/>
 			<light>
-				<color r="1.0" g="1.0" b="1.0"/>
-				<distribution x="0.5" y="0.6" z="0.5"/>
+				<color r="1.0" g="0.945" b="0.878"/>
+				<distribution x="0.3" y="0.5" z="1.0"/>
 				<point bool="1.0"/>
 				<direction x="0.0" y="0.0" z="0.0"/>
 				<cosCutOff value="0.0"/>
 				<exponent value="0.0"/>
 			</light>
+		</gameObject>
+		<gameObject name="Light2">
+			<transform>
+				<position x="0" y="0" z="3.1"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<renderer shader="default" material="metal" mesh="lightBase"/>
+			<renderer shader="default" material="light" mesh="lightEmit"/>
+			<light>
+				<color r="1.0" g="0.945" b="0.878"/>
+				<distribution x="0.3" y="0.5" z="1.0"/>
+				<point bool="1.0"/>
+				<direction x="0.0" y="0.0" z="0.0"/>
+				<cosCutOff value="0.0"/>
+				<exponent value="0.0"/>
+			</light>
+		</gameObject>
+		<gameObject name="Light3">
+			<transform>
+				<position x="0" y="0" z="-4.8"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<renderer shader="default" material="metal" mesh="lightBase"/>
+			<renderer shader="default" material="light" mesh="lightEmit"/>
+			<light>
+				<color r="1.0" g="0.945" b="0.878"/>
+				<distribution x="0.3" y="0.5" z="1.0"/>
+				<point bool="1.0"/>
+				<direction x="0.0" y="0.0" z="0.0"/>
+				<cosCutOff value="0.0"/>
+				<exponent value="0.0"/>
+			</light>
+		</gameObject>
+		<gameObject name="Shelf">
+			<transform>
+				<position x="0" y="0" z="0"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>		
+			<renderer shader="default" material="metal" mesh="shelf"/>
 		</gameObject>
 	</gameObjects>
 </scene>

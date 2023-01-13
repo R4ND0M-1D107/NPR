@@ -42,6 +42,11 @@ void RemoveRenderer(Renderer* renderer)
 	renderers.erase(std::remove(renderers.begin(), renderers.end(), renderer), renderers.end());
 }
 
+void RenderingManagerClear()
+{
+	renderers.clear();
+}
+
 void onReshape(int width, int height)
 {
 	glViewport(0, 0, width, height);

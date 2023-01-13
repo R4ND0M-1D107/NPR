@@ -43,48 +43,26 @@ void setupQuad()
 		glEnableVertexAttribArray(ppShader.first->locations["vertexUV"]);
 		glVertexAttribPointer(ppShader.first->locations["vertexUV"], 2, GL_FLOAT, GL_FALSE, quadNAttribsPerVertex * sizeof(float), (void*)(2 * sizeof(float)));
 	}
+
+	// vertex positions
+	glEnableVertexAttribArray(toScreenShader.first->locations["position"]);
+	glVertexAttribPointer(toScreenShader.first->locations["position"], 2, GL_FLOAT, GL_FALSE, quadNAttribsPerVertex * sizeof(float), (void*)(0));  // [xy][uv]
+	CHECK_GL_ERROR();
+	// vertex uv
+	glEnableVertexAttribArray(toScreenShader.first->locations["vertexUV"]);
+	glVertexAttribPointer(toScreenShader.first->locations["vertexUV"], 2, GL_FLOAT, GL_FALSE, quadNAttribsPerVertex * sizeof(float), (void*)(2 * sizeof(float)));
 }
 
 void setPostProcessingShaders(pugi::xml_node xmlNode)
 {
 	//return;
+	ppShaders.clear();
 	for (pugi::xml_node effectNode : xmlNode.children())
 	{
 		Shader* s = new Shader(effectNode.attribute("shader").as_string());
 		Material* m = new Material(effectNode.attribute("material").as_string());
 		ppShaders.push_back(std::pair<Shader*, Material*>(s, m));
 	}
-}
-
-bool createGBuffer()
-{
-	glGenFramebuffers(1, &gBuffer.FBO);
-	glGenRenderbuffers(1, &gBuffer.RBO);
-	glGenTextures(1, &gBuffer.texture);
-	glGenTextures(1, &gBuffer.normalTexture);
-	glGenTextures(1, &gBuffer.depthTexture);
-	glGenTextures(1, &gBuffer.emissionTexture);
-	glGenTextures(1, &gBuffer.maskTexture);
-	glGenTextures(1, &gBuffer.UVTexture);
-	glGenTextures(1, &gBuffer.posTexture);
-
-	glGenFramebuffers(1, &gBuffer1.FBO);
-	glGenRenderbuffers(1, &gBuffer1.RBO);
-	glGenTextures(1, &gBuffer1.texture);
-	glGenTextures(1, &gBuffer1.normalTexture);
-	glGenTextures(1, &gBuffer1.depthTexture);
-	glGenTextures(1, &gBuffer1.emissionTexture);
-	glGenTextures(1, &gBuffer1.maskTexture);
-	glGenTextures(1, &gBuffer1.UVTexture);
-	glGenTextures(1, &gBuffer1.posTexture);
-
-	Shader* s0 = new Shader("./Prefabs/Shaders/toScreen.shader");
-	Material* m0 = new Material("./Prefabs/Materials/gBuffer.mat");
-	toScreenShader = std::pair<Shader*, Material*>(s0, m0);
-
-	setupQuad();
-
-	return true;
 }
 
 void bindColorTexture(GBuffer buff)
@@ -177,7 +155,6 @@ void bindEmitTexture(GBuffer buff)
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-
 void bindDepthTexture(GBuffer buff)
 {
 	glBindTexture(GL_TEXTURE_2D, buff.depthTexture); CHECK_GL_ERROR();
@@ -212,9 +189,18 @@ void bindStencilTexture(GBuffer buff)
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void renderIntoGBuffer()
+bool createGBuffer()
 {
-	CHECK_GL_ERROR();
+	glGenFramebuffers(1, &gBuffer.FBO);
+	glGenRenderbuffers(1, &gBuffer.RBO);
+	glGenTextures(1, &gBuffer.texture);
+	glGenTextures(1, &gBuffer.normalTexture);
+	glGenTextures(1, &gBuffer.depthTexture);
+	glGenTextures(1, &gBuffer.emissionTexture);
+	glGenTextures(1, &gBuffer.maskTexture);
+	glGenTextures(1, &gBuffer.UVTexture);
+	glGenTextures(1, &gBuffer.posTexture);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer.FBO);
 
 	bindColorTexture(gBuffer);
@@ -226,6 +212,42 @@ void renderIntoGBuffer()
 	bindUVTexture(gBuffer);
 	CHECK_GL_ERROR();
 
+	glGenFramebuffers(1, &gBuffer1.FBO);
+	glGenRenderbuffers(1, &gBuffer1.RBO);
+	glGenTextures(1, &gBuffer1.texture);
+	glGenTextures(1, &gBuffer1.normalTexture);
+	glGenTextures(1, &gBuffer1.depthTexture);
+	glGenTextures(1, &gBuffer1.emissionTexture);
+	glGenTextures(1, &gBuffer1.maskTexture);
+	glGenTextures(1, &gBuffer1.UVTexture);
+	glGenTextures(1, &gBuffer1.posTexture);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer1.FBO);
+
+	bindColorTexture(gBuffer1);
+	bindNormalTexture(gBuffer1);
+	bindDepthTexture(gBuffer1);
+	bindEmitTexture(gBuffer1);
+	bindMaskTexture(gBuffer1);
+	bindPosTexture(gBuffer1);
+	bindUVTexture(gBuffer1);
+	CHECK_GL_ERROR();
+
+	Shader* s0 = new Shader("./Prefabs/Shaders/toScreen.shader");
+	Material* m0 = new Material("./Prefabs/Materials/gBuffer.mat");
+	toScreenShader = std::pair<Shader*, Material*>(s0, m0);
+
+	setupQuad();
+
+	return true;
+}
+
+
+void renderIntoGBuffer()
+{
+	CHECK_GL_ERROR();
+	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer.FBO);	
+
 	CHECK_GL_ERROR();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	CHECK_GL_ERROR();
@@ -234,9 +256,9 @@ void renderIntoGBuffer()
 	GLenum buffs[6] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5 };
 	glDrawBuffers(6, buffs);
 
-	glEnable(GL_STENCIL_TEST);
 	glEnable(GL_DEPTH_TEST);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+	//glEnable(GL_STENCIL_TEST);
+	//glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		pgr::dieWithError("Frame buffer setup failed");
@@ -250,14 +272,6 @@ void swapGBuffer(GBuffer buff)
 
 	glBindFramebuffer(GL_FRAMEBUFFER, buff.FBO);
 
-	bindColorTexture(buff);
-	bindNormalTexture(buff);
-	bindEmitTexture(buff);
-	bindMaskTexture(buff);
-	bindPosTexture(buff);
-	bindUVTexture(buff);
-	CHECK_GL_ERROR();
-
 	CHECK_GL_ERROR();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	CHECK_GL_ERROR();
@@ -266,7 +280,7 @@ void swapGBuffer(GBuffer buff)
 	GLenum buffs[6] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5 };
 	glDrawBuffers(6, buffs);
 
-	glDisable(GL_STENCIL_TEST);
+	//glDisable(GL_STENCIL_TEST);
 	glDisable(GL_DEPTH_TEST);
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -288,31 +302,37 @@ void SetupGBufferMaterial(Material* mat, GBuffer buff)
 	mat->textures["uvTexture"] = buff.UVTexture;
 }
 
-void executeDeferredShading()
+int postProcessing(int renderPass)
 {
-	CHECK_GL_ERROR();
-	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	int i = 0;
 	for (auto const& ppShader : ppShaders)
 	{
-		if (i % 2 == 1) swapGBuffer(gBuffer);
+		if (renderPass % 2 == 1) swapGBuffer(gBuffer);
 		else swapGBuffer(gBuffer1);
 
 		glUseProgram(ppShader.first->program);
-		SetupGBufferMaterial(ppShader.second, (i % 2 == 1 ? gBuffer1 : gBuffer));
+		SetupGBufferMaterial(ppShader.second, (renderPass % 2 == 1 ? gBuffer1 : gBuffer));
 		ppShader.first->UseMaterial(ppShader.second);
 		glBindVertexArray(gBuffer.VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
 		CHECK_GL_ERROR();
 
-		i++;
+		renderPass++;
 	}
+	return renderPass;
+}
+
+void executeDeferredShading()
+{
+	CHECK_GL_ERROR();
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	int renderPass = 0;
+	renderPass = postProcessing(renderPass);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	glUseProgram(toScreenShader.first->program);
-	SetupGBufferMaterial(toScreenShader.second, (i % 2 == 1 ? gBuffer1 : gBuffer));
+	SetupGBufferMaterial(toScreenShader.second, (renderPass % 2 == 1 ? gBuffer1 : gBuffer));
 	toScreenShader.first->UseMaterial(toScreenShader.second);
 	glBindVertexArray(gBuffer.VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);

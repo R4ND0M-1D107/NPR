@@ -3,4 +3,5 @@
 
 void onUpdate(int time);
 void AddUpdatable(Component* updatable);
+void UpdateManagerClear();
 void RemoveUpdatable(Component* updatable);

@@ -28,10 +28,21 @@ Material::Material(std::string txt)
 			{
 				floats.insert(std::pair<std::string, float>(name, std::stof(value)));
 			}
+			else if (type == "vec2")
+			{
+				std::string separator = ";";
+				float v1 = std::stof(value.substr(0, value.find(separator)));
+				float v2 = std::stof(value.erase(0, value.find(separator) + separator.length()));
+				vec2s.insert(std::pair<std::string, glm::vec2>(name, glm::vec2(v1,v2)));
+			}
 			else
 			{
 				pgr::dieWithError("Invalid shader definition");
 			}
 		}
 	}
+}
+
+Material::~Material()
+{
 }

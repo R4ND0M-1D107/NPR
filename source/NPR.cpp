@@ -40,13 +40,7 @@ void finalizeApplication(void) {
 
 void initApplication()
 {
-	Deserialize("./Prefabs/Scenes/garage.xml");
-
-	if (!createGBuffer())
-	{
-		pgr::dieWithError("unable to create GBuffer");
-	}
-
+	loadScene("./Prefabs/Scenes/garage.xml");
 
 	glutSetCursor(GLUT_CURSOR_NONE);
 

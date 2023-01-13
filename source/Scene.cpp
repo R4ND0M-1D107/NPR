@@ -11,10 +11,61 @@
 #include "../include/Components/CameraController.h"
 #include "../include/Components/Light.h"
 #include "../include/DeferredRendering.h"
+#include "../include/RenderingManager.h"
+#include "../include/UpdateManager.h"
 
 std::map<std::string, Shader*> shaders;
 std::map<std::string, Material*> materials;
 std::map<std::string, Mesh*> meshes;
+
+std::vector<GameObject*> cache;
+
+
+void DeleteCache()
+{
+	while(meshes.size())
+	{
+		Mesh* back = prev(meshes.end())->second;
+		meshes.erase(prev(meshes.end()));
+		delete back;
+	}
+	while (meshes.size())
+	{
+		Material* back = prev(materials.end())->second;
+		materials.erase(prev(materials.end()));
+		delete back;
+	}
+	while (meshes.size())
+	{
+		Shader* back = prev(shaders.end())->second;
+		shaders.erase(prev(shaders.end()));
+		delete back;
+	}
+	while (cache.size())
+	{
+		GameObject* obj = cache.back();
+		cache.pop_back();
+		delete obj;
+	}
+	cache.clear();
+	shaders.clear();
+	materials.clear();
+	meshes.clear();
+}
+
+void loadScene(std::string sceneName)
+{
+	DeleteCache();
+	//RenderingManagerClear();
+	//UpdateManagerClear();
+	//Light::ClearLights();
+	Deserialize(sceneName);
+
+	if (!createGBuffer())
+	{
+		pgr::dieWithError("unable to create GBuffer");
+	}
+}
 
 void DeserializeShaders(pugi::xml_node shadersNode)
 {
@@ -51,7 +102,8 @@ void DeserializeGameObjects(pugi::xml_node gameObjectsNode)
 	for (pugi::xml_node gameObjectNode : gameObjectsNode.children())
 	{
 		GameObject* gameObject = new GameObject();
-		
+		cache.push_back(gameObject);
+
 		for (pugi::xml_node component: gameObjectNode.children())
 		{
 			std::string type = component.name();

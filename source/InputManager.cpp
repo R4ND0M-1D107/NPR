@@ -1,5 +1,6 @@
 #include "../include/InputManager.h"
 #include <pgr.h>
+#include "../include/Scene.h"
 
 Keys keys;
 bool pressedKeys[256];
@@ -12,6 +13,8 @@ std::vector<Component*> mouseListeners;
 void keyDown(unsigned char keyPressed, int mouseX, int mouseY)
 {
 	pressedKeys[keyPressed] = true;
+
+	if(pressedKeys['r']) loadScene("./Prefabs/Scenes/garage.xml");
 };
 
 void keyUp(unsigned char keyReleased, int mouseX, int mouseY)
@@ -69,6 +72,11 @@ void mouseClick(int buttonPressed, int buttonState, int mouseX, int mouseY)
 void AddMouseListener(Component* listener)
 {
 	mouseListeners.push_back(listener);
+}
+
+void RemoveMouseListener(Component* listener)
+{
+	mouseListeners.erase(std::remove(mouseListeners.begin(), mouseListeners.end(), listener), mouseListeners.end());
 }
 
 void mouseMove(int mouseX, int mouseY)

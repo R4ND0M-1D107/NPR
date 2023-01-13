@@ -11,9 +11,15 @@ float sensitivity = 10;
 
 CameraController::CameraController(GameObject* owner) : Component(owner)
 {
+	name = "cameraController";
 	AddMouseListener(this);
 	yaw = this->gameObject->transform->rotation.x;
 	pitch = this->gameObject->transform->rotation.y;
+}
+
+CameraController::~CameraController()
+{
+	RemoveMouseListener(this);
 }
 
 void CameraController::Update(float deltaTime)

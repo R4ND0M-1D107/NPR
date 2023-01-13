@@ -9,7 +9,7 @@ private:
 	std::vector<Component*> components;
 public:
 	GameObject();
-	GameObject* gameObject;
+	~GameObject();
 	Transform* transform;
 	GameObject* parent;
 	std::vector <GameObject*> children;

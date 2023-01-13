@@ -5,6 +5,23 @@ GameObject::GameObject()
 	transform = new Transform(this);
 }
 
+GameObject::~GameObject()
+{
+	//delete transform;
+	while (children.size())
+	{
+		GameObject* obj = children.back();
+		children.pop_back();
+		delete obj;
+	}
+	while (components.size())
+	{
+		Component* obj = components.back();
+		components.pop_back();
+		delete obj;
+	}
+}
+
 void GameObject::AddComponent(Component* component)
 {
 	components.push_back(component);

@@ -7,6 +7,7 @@
 
 PlayerMovement::PlayerMovement(GameObject* owner) : Component(owner)
 {
+	name = "playerMovement";
 	AddUpdatable(this);
 }
 
@@ -26,4 +27,9 @@ void PlayerMovement::Update(float deltaTime)
 	glm::normalize(moveDir);
 	moveDir = glm::vec3(rotMat * glm::vec4(moveDir, 1.0));
 	this->gameObject->transform->position += moveDir * moveSpeed;
+}
+
+PlayerMovement::~PlayerMovement()
+{
+	RemoveUpdatable(this);
 }

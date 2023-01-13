@@ -15,12 +15,12 @@ uniform float height;
 uniform float intensity;
 uniform float delta;
 
-out vec4 fragmentColor;
-out vec4 normalColor;
-out vec4 emissionColor;
-out vec4 maskColor;
-out vec4 posColor;
-out vec4 uvColor;
+layout(location = 0) out vec4 fragmentColor;
+layout(location = 1) out vec4 normalColor;
+layout(location = 2) out vec4 emissionColor;
+layout(location = 3) out vec4 maskColor;
+layout(location = 4) out vec4 posColor;
+layout(location = 5) out vec4 uvColor;
 
 vec3 ACES(vec3 color)
 {

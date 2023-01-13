@@ -1,13 +1,15 @@
 #version 330
+#extension GL_ARB_explicit_uniform_location : require
+
 in vec2 UV;
 
-uniform sampler2D screenTexture;
-uniform sampler2D normalTexture;
-uniform sampler2D depthTexture;
-uniform sampler2D emissionTexture;
-uniform sampler2D maskTexture;
-uniform sampler2D posTexture;
-uniform sampler2D uvTexture;
+layout (location = 0) uniform sampler2D screenTexture;
+layout (location = 1) uniform sampler2D normalTexture;
+layout (location = 2) uniform sampler2D depthTexture;
+layout (location = 3) uniform sampler2D emissionTexture;
+layout (location = 4) uniform sampler2D maskTexture;
+layout (location = 5) uniform sampler2D posTexture;
+layout (location = 6) uniform sampler2D uvTexture;
 
 uniform float width;
 uniform float height;
