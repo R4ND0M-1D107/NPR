@@ -5,9 +5,10 @@
 #include "../include/Components/Camera.h"
 #include "../include/Components/GameObject.h"
 #include "../include/Components/Transform.h"
-
+#include "../include/Components/Light.h"
 
 std::vector<Renderer*> renderers;
+std::vector<ShadowRenderer*> shadowRenderers;
 Camera* mainCamera;
 
 void onRender()
@@ -19,17 +20,33 @@ void onRender()
 
 	renderIntoGBuffer();
 	
+	glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	for (Renderer* renderer : renderers)
 	{
 		renderer->Render(mainCamera->GetViewMatrix(), mainCamera->GetPerspectiveMatrix());
 	}
 
+
+	glViewport(0, 0, 1024, 1024);
+	for (Light* light : Light::GetAllLights())
+	{
+		light->ComputeShadows();
+	}
+	glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	CHECK_GL_ERROR();
 	executeDeferredShading();
 	CHECK_GL_ERROR();
 	glutSwapBuffers();
 	CHECK_GL_ERROR();
 	glutPostRedisplay();
+}
+
+void RenderShadowCasters(std::vector<glm::mat4> projViewMats, glm::vec3 lightPos)
+{
+	for (ShadowRenderer* renderer : shadowRenderers)
+	{
+		renderer->Render(projViewMats, lightPos);
+	}
 }
 
 void AddRenderer(Renderer* renderer)
@@ -40,6 +57,16 @@ void AddRenderer(Renderer* renderer)
 void RemoveRenderer(Renderer* renderer)
 {
 	renderers.erase(std::remove(renderers.begin(), renderers.end(), renderer), renderers.end());
+}
+
+void AddShadowRenderer(ShadowRenderer* renderer)
+{
+	shadowRenderers.push_back(renderer);
+}
+
+void RemoveShadowRenderer(ShadowRenderer* renderer)
+{
+	shadowRenderers.erase(std::remove(shadowRenderers.begin(), shadowRenderers.end(), renderer), shadowRenderers.end());
 }
 
 void RenderingManagerClear()

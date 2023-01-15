@@ -31,6 +31,6 @@ void main()
 	fragmentColor = texture(albedoTexture, tiledUV);
 	emissionColor = vec4(texture(emissionTexture, tiledUV));
 	maskColor = texture(maskTexture, tiledUV);
-	posColor = vec4(positionWS, 1.0);
+	posColor = vec4(positionWS/25.0f, 1.0);
 	uvColor = vec4(tiledUV, 0.0, 1.0);
 }

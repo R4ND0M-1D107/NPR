@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
@@ -158,14 +158,15 @@
   <ItemGroup>
     <ClCompile Include="include\pugixml\pugixml.cpp" />
     <ClCompile Include="Models\sphere.cpp" />
-    <ClCompile Include="packages\pugixml.1.13.0\build\native\include\pugixml.cpp" />
     <ClCompile Include="source\Components\Camera.cpp" />
     <ClCompile Include="source\Components\CameraController.cpp" />
     <ClCompile Include="source\Components\Component.cpp" />
     <ClCompile Include="source\Components\GameObject.cpp" />
     <ClCompile Include="source\Components\Light.cpp" />
     <ClCompile Include="source\Components\PlayerMovement.cpp" />
+    <ClCompile Include="source\Components\PointLight.cpp" />
     <ClCompile Include="source\Components\Renderer.cpp" />
+    <ClCompile Include="source\Components\ShadowRenderer.cpp" />
     <ClCompile Include="source\Components\Transform.cpp" />
     <ClCompile Include="source\DeferredRendering.cpp" />
     <ClCompile Include="source\InputManager.cpp" />
@@ -181,10 +182,14 @@
     <ClInclude Include="include\Components\Camera.h" />
     <ClInclude Include="include\Components\CameraController.h" />
     <ClInclude Include="include\Components\Component.h" />
+    <ClInclude Include="include\Components\DirectionalLight.h" />
     <ClInclude Include="include\Components\GameObject.h" />
     <ClInclude Include="include\Components\Light.h" />
     <ClInclude Include="include\Components\PlayerMovement.h" />
+    <ClInclude Include="include\Components\PointLight.h" />
     <ClInclude Include="include\Components\Renderer.h" />
+    <ClInclude Include="include\Components\ShadowRenderer.h" />
+    <ClInclude Include="include\Components\SpotLight.h" />
     <ClInclude Include="include\Components\Transform.h" />
     <ClInclude Include="include\DeferredRendering.h" />
     <ClInclude Include="include\Header.h" />
@@ -198,11 +203,8 @@
     <ClInclude Include="include\Shading\Shader.h" />
     <ClInclude Include="include\UpdateManager.h" />
     <ClInclude Include="Models\sphere.h" />
-    <ClInclude Include="packages\pugixml.1.13.0\build\native\include\pugiconfig.hpp" />
-    <ClInclude Include="packages\pugixml.1.13.0\build\native\include\pugixml.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="shaders\default-fs.glsl">
       <DeploymentContent>true</DeploymentContent>
       <FileType>Document</FileType>
@@ -318,13 +320,5 @@
     <Image Include="Textures\Wood\WoodWhiteAlbedo.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\pugixml.1.13.0\build\native\pugixml.targets" Condition="Exists('packages\pugixml.1.13.0\build\native\pugixml.targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\pugixml.1.13.0\build\native\pugixml.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\pugixml.1.13.0\build\native\pugixml.targets'))" />
-  </Target>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>

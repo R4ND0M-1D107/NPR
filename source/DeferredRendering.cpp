@@ -324,6 +324,7 @@ int postProcessing(int renderPass)
 
 void executeDeferredShading()
 {
+	glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	CHECK_GL_ERROR();
 	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	int renderPass = 0;

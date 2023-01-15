@@ -14,7 +14,7 @@ glm::mat4 Camera::GetPerspectiveMatrix()
 	float width = static_cast<float>(glutGet(GLUT_WINDOW_WIDTH));
 	float height = static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT));
 	float aspectRatio = width / height;
-	glm::mat4 perspectiveM = glm::perspective(glm::radians(55.0f), aspectRatio, 0.1f, 45.0f);
+	glm::mat4 perspectiveM = glm::perspective(glm::radians(55.0f), aspectRatio, 0.1f, 25.0f);
 	return perspectiveM;
 }
 

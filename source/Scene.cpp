@@ -10,6 +10,7 @@
 #include "../include/Components/Camera.h"
 #include "../include/Components/CameraController.h"
 #include "../include/Components/Light.h"
+#include "../include/Components/PointLight.h"
 #include "../include/DeferredRendering.h"
 #include "../include/RenderingManager.h"
 #include "../include/UpdateManager.h"
@@ -71,8 +72,17 @@ void DeserializeShaders(pugi::xml_node shadersNode)
 {
 	for (pugi::xml_node shaderNode : shadersNode.children())
 	{
-		Shader* shader = new Shader(shaderNode.attribute("path").as_string());
 		std::string shaderName = shaderNode.attribute("name").as_string();
+		Shader* shader;
+		std::string geometryShader = shaderNode.attribute("gs").as_string("");
+		if (geometryShader != "")
+		{
+			shader = new Shader(shaderNode.attribute("path").as_string(), geometryShader);
+		}
+		else
+		{
+			shader = new Shader(shaderNode.attribute("path").as_string());
+		}
 		shaders.insert(std::pair<std::string, Shader*>(shaderName, shader));
 	}
 }
@@ -104,7 +114,7 @@ void DeserializeGameObjects(pugi::xml_node gameObjectsNode)
 		GameObject* gameObject = new GameObject();
 		cache.push_back(gameObject);
 
-		for (pugi::xml_node component: gameObjectNode.children())
+		for (pugi::xml_node component : gameObjectNode.children())
 		{
 			std::string type = component.name();
 			if (type == "transform")
@@ -113,7 +123,7 @@ void DeserializeGameObjects(pugi::xml_node gameObjectsNode)
 				gameObject->transform->rotation = glm::vec3(component.child("rotation").attribute("x").as_float(), component.child("rotation").attribute("y").as_float(), component.child("rotation").attribute("z").as_float());
 				gameObject->transform->scale = glm::vec3(component.child("scale").attribute("x").as_float(), component.child("scale").attribute("y").as_float(), component.child("scale").attribute("z").as_float());
 			}
-			else if(type == "camera")
+			else if (type == "camera")
 			{
 				Camera* camera = new Camera(gameObject);
 			}
@@ -134,7 +144,22 @@ void DeserializeGameObjects(pugi::xml_node gameObjectsNode)
 			}
 			else if (type == "light")
 			{
-				Light* light = new Light(gameObject, component);
+				std::string lightType = component.attribute("type").as_string();
+				if (lightType == "point")
+				{
+					PointLight* light = new PointLight(gameObject, component);
+				}
+				else
+				{
+					printf("Would you kindly implement %s light before trying to use it", component.attribute("type").as_string());
+				}
+
+			}
+			else if (type == "shadowRenderer")
+			{
+				Mesh* mesh = meshes[(std::string)component.attribute("mesh").as_string()];
+				Shader* shader = shaders[(std::string)component.attribute("shader").as_string()];
+				ShadowRenderer* renderer = new ShadowRenderer(gameObject, shader, mesh);
 			}
 			else
 			{

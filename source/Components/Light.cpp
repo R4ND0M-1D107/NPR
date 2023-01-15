@@ -2,7 +2,6 @@
 #include "..\..\include\Components\GameObject.h"
 #include "..\..\include\Components\Transform.h"
 
-
 std::vector<Light*> Light::activeLights = std::vector<Light*>();
 
 Light::Light(GameObject* owner, pugi::xml_node xmlNode) : Component(owner)
@@ -35,4 +34,8 @@ glm::vec4 Light::getPosition()
 void Light::ClearLights()
 {
 	activeLights.clear();
+}
+
+void Light::ComputeShadows()
+{
 }

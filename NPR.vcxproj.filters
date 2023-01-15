@@ -93,7 +93,10 @@
     <ClCompile Include="include\pugixml\pugixml.cpp">
       <Filter>Header Files\pugixml</Filter>
     </ClCompile>
-    <ClCompile Include="packages\pugixml.1.13.0\build\native\include\pugixml.cpp">
+    <ClCompile Include="source\Components\ShadowRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Components\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -158,10 +161,16 @@
     <ClInclude Include="include\pugixml\pugixml.hpp">
       <Filter>Header Files\pugixml</Filter>
     </ClInclude>
-    <ClInclude Include="packages\pugixml.1.13.0\build\native\include\pugiconfig.hpp">
+    <ClInclude Include="include\Components\ShadowRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="packages\pugixml.1.13.0\build\native\include\pugixml.hpp">
+    <ClInclude Include="include\Components\PointLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Components\SpotLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Components\DirectionalLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -169,7 +178,6 @@
     <None Include="shaders\gBuffer-fs.glsl">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="packages.config" />
     <None Include="Textures\Wood\WoodWhiteAlbedo.jpg~" />
     <None Include="Textures\Wood\WoodAlbedo.jpg~" />
     <None Include="Textures\Glass\glass.png~" />

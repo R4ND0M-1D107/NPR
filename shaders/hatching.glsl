@@ -20,6 +20,7 @@ struct Light
 	vec3 direction;
 	float cutoff;
 	float exponent;
+	samplerCube shadowCubemap;
 };
 
 uniform Light lights[4];
@@ -32,6 +33,23 @@ layout(location = 3) out vec4 maskColor;
 layout(location = 4) out vec4 posColor;
 layout(location = 5) out vec4 uvColor;
 
+float ShadowCalculation(vec3 fragPos, vec3 lightPos, samplerCube shadowCubemap)
+{
+    // get vector between fragment position and light position
+    vec3 fragToLight = fragPos - lightPos;
+    // use the light to fragment vector to sample from the depth map    
+    float closestDepth = texture(shadowCubemap, fragToLight).r;
+    // it is currently in linear range between [0,1]. Re-transform back to original value
+    closestDepth *= 25.0f;
+    // now get current linear depth as the length between the fragment and light position
+    float currentDepth = length(fragToLight);
+    // now test for shadows
+    float bias = 0.05; 
+    float shadow = currentDepth -  bias > closestDepth ? 0.0 : 1.0;
+
+    return shadow;
+}  
+
 vec3 SampleNormalTexture(sampler2D normalTex, vec2 UV)
 {
     vec3 normal = texture(normalTex, UV).xyz;
@@ -39,24 +57,7 @@ vec3 SampleNormalTexture(sampler2D normalTex, vec2 UV)
     return decodedNormal;
 }
 
-vec2 hatchingDirection(vec2 screenUV)
-{
-	vec2 texOffset = 1.0 / textureSize(uvTexture, 0);
-	vec2 localUV1 = texture(uvTexture, UV).xy;
-	vec2 localUV2 = texture(uvTexture, UV + texOffset).xy;
-	vec2 ret = normalize(localUV1-localUV2);
-	return ret;
-}
-
-float hatch(float uvx)
-{
-	//float val = 1-clamp(sin(uvx*3000), 0, 1);
-	float val = abs(sin(uvx*300)); 
-	//floor(fract(uvx*20) + 0.5);
-	return val;
-}
-
-vec4 computeLight(Light light, vec3 n, vec3 positionWS, vec4 mask)
+vec4 computeLight(Light light, vec3 n, vec3 positionWS, vec4 mask, vec3 fragColor)
 {
 	vec3 color = vec3(0.0f);
 
@@ -70,24 +71,25 @@ vec4 computeLight(Light light, vec3 n, vec3 positionWS, vec4 mask)
 		float cosBeta = max(0, dot(r, v));
 		float shininess = mask.a;
 
-		color += light.color * light.distribution.r * mask.g; //ambient
-		color += light.color * light.distribution.b * cosAlpha; //diffuse
+		color += light.color * light.distribution.r * fragColor * mask.g; //ambient
+		color += light.color * light.distribution.b * cosAlpha * fragColor; //diffuse
 	} else if(light.position.w == 1.0)
 	{
 		vec3 l = normalize(light.position.xyz - positionWS);
 		n = normalize(n);
-		float cosAlpha = max(0, dot(l, n));
+		float cosAlpha = max(0, dot(n, l));
 		vec3 r = reflect(-l, n);
 		vec3 v = normalize(viewerPosition - positionWS);
 		float cosBeta = max(0, dot(r, v));
 		float shininess = mask.a;
 
 		float spotCos = max(dot(-l, normalize(light.direction)), 0.0);
-		if(light.direction == vec3(0.0f,0.0f,0.0f) || spotCos >= light.cutoff)
+		if(light.direction == vec3(0.0,0.0,0.0) || spotCos >= light.cutoff)
 		{
-			color += light.color * light.distribution.r * mask.g; //ambient
-			color += light.color * light.distribution.g * cosAlpha; //diffuse
-			color += light.color * light.distribution.b * pow(cosBeta, shininess)  * mask.rrr; //specualar
+			float shadow = ShadowCalculation(positionWS, light.position.rgb, light.shadowCubemap);
+			color += light.color * light.distribution.r * fragColor * mask.g; //ambient
+			color += light.color * light.distribution.g * cosAlpha * fragColor * shadow; //diffuse
+			color += light.color * light.distribution.b * pow(cosBeta, shininess)  * mask.r *shadow; //specualar
 		}
 
 		if(light.direction == vec3(0.0,0.0,0.0))
@@ -97,12 +99,26 @@ vec4 computeLight(Light light, vec3 n, vec3 positionWS, vec4 mask)
 			color *= power;
 		} else
 		{
-			pow(spotCos*color, vec3(light.exponent));
+			color = pow(spotCos*color, vec3(light.exponent));
 		}
 	}
 
 	color = clamp(color, vec3(0,0,0), vec3(1,1,1));
 	return vec4(color, 0.0);
+}
+
+float hatch(float uvx)
+{
+	//float val = 1-clamp(sin(uvx*3000), 0, 1);
+	float val = abs(sin(uvx*300)); 
+	val = clamp((val+0.35), 0, 1);
+	//floor(fract(uvx*20) + 0.5);
+	return val;
+}
+
+float Luminance(vec3 rgb)
+{
+    return (0.299*rgb.x + 0.587*rgb.y + 0.144*rgb.z);
 }
 
 void main()
@@ -111,30 +127,28 @@ void main()
 
     vec3 normal = SampleNormalTexture(normalTexture, UV);
 	vec4 mask = texture(maskTexture, UV);
-	vec3 pos = texture(posTexture, UV).xyz;
+	vec3 pos = texture(posTexture, UV).xyz * 25.0f;
 	vec4 fragColor = texture(screenTexture, UV);
 
 	for(int i = 0; i<4; i++)
 	{
-		albedoColor += computeLight(lights[i], normal, pos, mask);
+		albedoColor += computeLight(lights[i], normal, pos, mask, fragColor.rgb);
 	}
 	albedoColor.a = texture(screenTexture, UV).a;
-
-
+	
 	float hatching = 1;
-	float borders[] = {0.35, 0.2, 0.1};
-	for(int i = 0; i<3; i++)
+	float borders[4] = float[](0.15, 0.1, 0.05, 0.025);
+	float mixVal[4] = float[](0.25, 0.25, 0.75, 1);
+	for(int i = 0; i<4; i++)
 	{
-		if(albedoColor.r > borders[i]) break;
-		vec2 hatchDir = hatchingDirection(UV);
-		vec2 hatchUV = vec2(hatchDir.x*UV.x, hatchDir.y*UV.y);
-		float uvx = mix(hatchDir.x, hatchDir.y, 0.5+i/2.0);
+		float luminance = Luminance(albedoColor.rgb);
+		if(luminance > borders[i]) break;
+		vec2 hatchDir = texture(uvTexture, UV).xy;
+		float uvx = mix(hatchDir.x, hatchDir.y, mixVal[i]);
 		hatching = hatching * hatch(uvx);
-		//hatching -= 0.33f;
 	}
-
-	//fragmentColor = vec4(hatchingDirection(UV), 0, 1);
-    fragmentColor = albedoColor;//texture(screenTexture, UV);
+	
+    fragmentColor = fragColor*hatching;
     normalColor = vec4(texture(normalTexture, UV).xyz, 1.0);
     emissionColor = vec4(texture(emissionTexture, UV).xyz, 1.0);
     maskColor = vec4(texture(maskTexture, UV).xyz, 1.0);

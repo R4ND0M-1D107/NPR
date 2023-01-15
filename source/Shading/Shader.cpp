@@ -17,6 +17,82 @@ void Shader::SetupLights()
 		this->lights[i].cutoff = glGetUniformLocation(this->program, ("lights[" + idx + "].cutoff").c_str());
 		this->lights[i].exponent = glGetUniformLocation(this->program, ("lights[" + idx + "].exponent").c_str());
 		this->viewerPos = glGetUniformLocation(this->program, "viewerPosition");
+		this->lights[i].shadowCubemap = glGetUniformLocation(this->program, ("lights[" + idx + "].shadowCubemap").c_str());
+		printf("cubemap pos %d\n", this->lights[i].shadowCubemap);
+	}
+}
+
+void Shader::DeserializeLocations(std::ifstream &file)
+{
+	std::string type;
+	std::string name;
+	GLint location;
+	while (file >> type >> location >> name)
+	{
+		if (type == "out")
+		{
+
+			//glBindFragDataLocation(program, location, name.c_str());
+			CHECK_GL_ERROR();
+		}
+		else if (type == "attribute")
+		{
+
+			glBindAttribLocation(program, location, name.c_str());
+			CHECK_GL_ERROR();
+		}
+		else if (type == "uniform")
+		{
+			location = glGetUniformLocation(program, name.c_str());
+			printf("%s : %d\n", name.c_str(), location);
+			CHECK_GL_ERROR();
+		}
+		else if (type == "lights")
+		{
+			SetupLights();
+		}
+		else
+		{
+			pgr::dieWithError("Invalid shader definition");
+		}
+		//printf("%s %d %s\n", txt.c_str(), location, name.c_str());
+		locations.insert(std::pair<std::string, GLint>(name, location));
+	}
+}
+
+Shader::Shader(std::string txt, std::string geometryShader)
+{
+	std::ifstream file(txt, std::ios::in);
+	if (!file)
+	{
+		pgr::dieWithError("shader file doesn't exist");
+	}
+	else
+	{
+		std::string vs;
+		std::string fs;
+		if (!(file >> vs) || !(file >> fs))
+		{
+			pgr::dieWithError("Invalid shader definition");
+		}
+		else
+		{
+			GLuint shaders[] = {
+			pgr::createShaderFromFile(GL_VERTEX_SHADER, vs),
+			pgr::createShaderFromFile(GL_GEOMETRY_SHADER, geometryShader),
+			pgr::createShaderFromFile(GL_FRAGMENT_SHADER, fs),
+			0
+			};
+			if (shaders[0] == 0 || shaders[1] == 0 || shaders[2] == 0)
+				pgr::dieWithError("Shader creation failed");
+
+			program = pgr::createProgram(shaders);
+			if (program == 0)
+			{
+				pgr::dieWithError("Shader creation failed1");
+			}
+		}
+		DeserializeLocations(file);
 	}
 }
 
@@ -52,42 +128,11 @@ Shader::Shader(std::string txt)
 			}
 		}
 		
-
-		std::string type;
-		std::string name;
-		GLint location;
-		while (file >> type >> location >> name)
-		{
-			if (type == "out")
-			{
-
-				//glBindFragDataLocation(program, location, name.c_str());
-				CHECK_GL_ERROR();
-			}
-			else if (type == "attribute")
-			{
-
-				glBindAttribLocation(program, location, name.c_str());
-				CHECK_GL_ERROR();
-			}
-			else if (type == "uniform")
-			{
-				location = glGetUniformLocation(program, name.c_str());
-				CHECK_GL_ERROR();
-			}
-			else if (type == "lights")
-			{
-				SetupLights();
-			}
-			else
-			{
-				pgr::dieWithError("Invalid shader definition");
-			}
-			//printf("%s %d %s\n", txt.c_str(), location, name.c_str());
-			locations.insert(std::pair<std::string, GLint>(name, location));
-		}
+		DeserializeLocations(file);
+		
 	}
 }
+
 
 void Shader::SetMatrices(glm::mat4 viewMatrix, glm::mat4 projectionMatrix, glm::mat4 modelMatrix)
 {
@@ -101,7 +146,7 @@ Shader::~Shader()
 {
 }
 
-void Shader::SetLights(std::vector<Light*> lightComponents)
+void Shader::SetLights(std::vector<Light*> lightComponents, int j)
 {
 	for (int i = 0; i < lightComponents.size() && i < _MaxLights; i++)
 	{
@@ -111,7 +156,16 @@ void Shader::SetLights(std::vector<Light*> lightComponents)
 		glUniform3fv(lights[i].direction, 1, glm::value_ptr(lightComponents[i]->direction));
 		glUniform1f(lights[i].cutoff, lightComponents[i]->cosCutOff);
 		glUniform1f(lights[i].exponent, lightComponents[i]->exponent);
+		glActiveTexture(GL_TEXTURE0+j);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, lightComponents[i]->shadowMap);
+		glUniform1i(lights[i].shadowCubemap, j);
+		j++;
 	}
+}
+
+void Shader::SetVec3(std::string location, glm::vec3 vector)
+{
+	glUniform3fv(this->locations[location], 1, glm::value_ptr(vector));
 }
 
 void Shader::UseMaterial(Material* material)
@@ -128,18 +182,16 @@ void Shader::UseMaterial(Material* material)
 	for (auto const& floatNum : material->floats)
 	{
 		glUniform1f(this->locations[floatNum.first], floatNum.second);
-		i++;
 	}
 
 	for (auto const& vec2 : material->vec2s)
 	{
 		glUniform2fv(this->locations[vec2.first], 1, glm::value_ptr(vec2.second));
-		i++;
 	}
 
 	if (lightsActive)
 	{
-		this->SetLights(Light::GetAllLights());
+		this->SetLights(Light::GetAllLights(), i);
 		glUniform3fv(viewerPos, 1, glm::value_ptr(GetCameraPosition())); 
 	}
 }
