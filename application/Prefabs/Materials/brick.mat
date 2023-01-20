@@ -1,0 +1,4 @@
+texture albedoTexture Textures/brick/albedo.tga
+texture normalTexture Textures/brick/normal.tga
+texture emissionTexture Textures/black.png
+texture maskTexture Textures/brick/RMA.tga

@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<scene name="test">
+	<shaders>
+		<shader name="default" path="./Prefabs/Shaders/object.shader"/>
+		<shader name="pointShadow" path="./Prefabs/Shaders/pointShadow.shader" gs="shaders/pointShadow-gs.glsl"/>
+		<shader name="dirShadow" path="./Prefabs/Shaders/dirShadow.shader"/>
+	</shaders>
+	<materials>
+		<material name="test" path="./Prefabs/Materials/test.mat"/>
+		<material name="metal" path="./Prefabs/Materials/metal.mat"/>
+		<material name="wood" path="./Prefabs/Materials/wood.mat"/>
+		<material name="woodBlue" path="./Prefabs/Materials/woodBlue.mat"/>
+		<material name="woodCyan" path="./Prefabs/Materials/woodCyan.mat"/>
+		<material name="woodWhite" path="./Prefabs/Materials/woodWhite.mat"/>
+		<material name="woodLight" path="./Prefabs/Materials/woodLight.mat"/>
+		<material name="car" path="./Prefabs/Materials/car.mat"/>
+		<material name="stylWood" path="./Prefabs/Materials/stylWood.mat"/>
+		<material name="concrete" path="./Prefabs/Materials/concrete.mat"/>
+		<material name="plaster" path="./Prefabs/Materials/plaster.mat"/>
+		<material name="brass" path="./Prefabs/Materials/brass.mat"/>
+		<material name="light" path="./Prefabs/Materials/light.mat"/>
+	</materials>
+	<meshes>
+		<mesh name="car" path="./Models/car.obj"/>
+		<mesh name="cube" path="./Models/cube.obj"/>
+		<mesh name="floor" path="./Models/floor.obj"/>
+		<mesh name="counter-door" path="./Models/Counter/counter-door.obj"/>
+		<mesh name="counter-base" path="./Models/Counter/counter-base.obj"/>
+		<mesh name="counter-handles" path="./Models/Counter/counter-handles.obj"/>
+		<mesh name="counter-top" path="./Models/Counter/counter-top.obj"/>
+		<mesh name="counter-wood" path="./Models/Counter/counter-wood.obj"/>
+		<mesh name="garage-concrete" path="./Models/Garage/garageConcrete.obj"/>
+		<mesh name="garage-door" path="./Models/Garage/garageDoor.obj"/>
+		<mesh name="garage-doorknob" path="./Models/Garage/garageDoorknob.obj"/>
+		<mesh name="garage-sidedoor" path="./Models/Garage/garageSidedoor.obj"/>
+		<mesh name="garage-roof" path="./Models/Garage/garageRoof.obj"/>
+		<mesh name="garage-supports" path="./Models/Garage/garageSupports.obj"/>
+		<mesh name="garage-wall" path="./Models/Garage/garageWall.obj"/>
+		<mesh name="garage-window" path="./Models/Garage/garageWindow.obj"/>
+		<mesh name="shelf" path="./Models/shelf.obj"/>
+		<mesh name="lightBase" path="./Models/Garage/Light/lightBase.obj"/>
+		<mesh name="lightEmit" path="./Models/Garage/Light/lightEmit.obj"/>
+		<mesh name="sphere" path="./Models/sphere.obj"/>
+		<mesh name="s_car" path="./Models/car.obj"/>
+		<mesh name="s_cube" path="./Models/cube.obj"/>
+		<mesh name="s_floor" path="./Models/floor.obj"/>
+		<mesh name="s_counter-door" path="./Models/Counter/counter-door.obj"/>
+		<mesh name="s_counter-base" path="./Models/Counter/counter-base.obj"/>
+		<mesh name="s_counter-handles" path="./Models/Counter/counter-handles.obj"/>
+		<mesh name="s_counter-top" path="./Models/Counter/counter-top.obj"/>
+		<mesh name="s_counter-wood" path="./Models/Counter/counter-wood.obj"/>
+		<mesh name="s_garage-concrete" path="./Models/Garage/garageConcrete.obj"/>
+		<mesh name="s_garage-door" path="./Models/Garage/garageDoor.obj"/>
+		<mesh name="s_garage-doorknob" path="./Models/Garage/garageDoorknob.obj"/>
+		<mesh name="s_garage-sidedoor" path="./Models/Garage/garageSidedoor.obj"/>
+		<mesh name="s_garage-roof" path="./Models/Garage/garageRoof.obj"/>
+		<mesh name="s_garage-supports" path="./Models/Garage/garageSupports.obj"/>
+		<mesh name="s_garage-wall" path="./Models/Garage/garageWall.obj"/>
+		<mesh name="s_garage-window" path="./Models/Garage/garageWindow.obj"/>
+		<mesh name="s_shelf" path="./Models/shelf.obj"/>
+		<mesh name="s_lightBase" path="./Models/Garage/Light/lightBase.obj"/>
+		<mesh name="s_lightEmit" path="./Models/Garage/Light/lightEmit.obj"/>
+	</meshes>
+	<gameObjects>
+		<gameObject name="Player">
+			<transform>
+				<position x="0" y="0" z="0"/>
+				<rotation x="90" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<camera/>
+			<playerMovement/>
+			<cameraController/>
+		</gameObject>
+		<gameObject name="Counter">
+			<transform>
+				<position x="0" y="0" z="0"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>		
+			<renderer shader="default" material="woodBlue" mesh="counter-base"/>
+			<renderer shader="default" material="wood" mesh="counter-wood"/>
+			<renderer shader="default" material="woodCyan" mesh="counter-door"/>
+			<renderer shader="default" material="metal" mesh="counter-handles"/>
+			<renderer shader="default" material="woodWhite" mesh="counter-top"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_counter-base"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_counter-wood"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_counter-door"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_counter-handles"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_counter-top"/>
+		</gameObject>
+		<gameObject name="Garage">
+			<transform>
+				<position x="0" y="0" z="0"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<renderer shader="default" material="concrete" mesh="garage-concrete"/>
+			<renderer shader="default" material="wood" mesh="garage-door"/>
+			<renderer shader="default" material="brass" mesh="garage-doorknob"/>
+			<renderer shader="default" material="woodLight" mesh="garage-sidedoor"/>
+			<renderer shader="default" material="stylWood" mesh="garage-roof"/>
+			<renderer shader="default" material="wood" mesh="garage-supports"/>
+			<renderer shader="default" material="plaster" mesh="garage-wall"/>
+			<renderer shader="default" material="metal" mesh="garage-window"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-concrete"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-door"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-doorknob"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-sidedoor"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-roof"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-supports"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-wall"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-window"/>
+		</gameObject>
+		<gameObject name="CeilingLights">
+			<transform>
+				<position x="0" y="" z="0"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<renderer shader="default" material="metal" mesh="lightBase"/>
+			<renderer shader="default" material="light" mesh="lightEmit"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightBase"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightEmit"/>
+			<children>
+				<gameObject name="CeilingLight2">
+					<transform>
+						<position x="0" y="0" z="3.1"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>
+					<renderer shader="default" material="metal" mesh="lightBase"/>
+					<renderer shader="default" material="light" mesh="lightEmit"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightBase"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightEmit"/>
+				</gameObject>
+				<gameObject name="CeilingLight3">
+					<transform>
+						<position x="0" y="0" z="-4.8"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>
+					<renderer shader="default" material="metal" mesh="lightBase"/>
+					<renderer shader="default" material="light" mesh="lightEmit"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightBase"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightEmit"/>
+				</gameObject>
+			</children>
+		</gameObject>
+		<gameObject name="Light1">
+			<transform>
+				<position x="0" y="2" z="-0.75"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<light type="point">
+				<color r="1.0" g="0.945" b="0.878"/>
+				<distribution x="0.4" y="0.7" z="1.0"/>
+				<point bool="1.0"/>
+				<direction x="0.0" y="0.0" z="0.0"/>
+				<cosCutOff value="0.0"/>
+				<exponent value="0.0"/>
+			</light>
+		</gameObject>
+		<gameObject name="Light2">
+			<transform>
+				<position x="0" y="2" z="2.5"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<light type="point">
+				<color r="1.0" g="0.945" b="0.878"/>
+				<distribution x="0.4" y="0.7" z="1.0"/>
+				<point bool="1.0"/>
+				<direction x="0.0" y="0.0" z="0.0"/>
+				<cosCutOff value="0.0"/>
+				<exponent value="0.0"/>
+			</light>
+		</gameObject>
+		<gameObject name="Light3">
+			<transform>
+				<position x="0" y="2" z="-5.5"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<light type="point">
+				<color r="1.0" g="0.945" b="0.878"/>
+				<distribution x="0.4" y="0.7" z="1.0"/>
+				<point bool="1.0"/>
+				<direction x="0.0" y="0.0" z="0.0"/>
+				<cosCutOff value="0.0"/>
+				<exponent value="0.0"/>
+			</light>
+		</gameObject>
+		<gameObject name="Shelf">
+			<transform>
+				<position x="0" y="0" z="0"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>		
+			<renderer shader="default" material="metal" mesh="shelf"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_shelf"/>
+		</gameObject>
+	</gameObjects>
+</scene>

@@ -1,0 +1,4 @@
+texture albedoTexture Textures/black.png
+texture normalTexture Textures/black.png
+texture emissionTexture Textures/white.png
+texture maskTexture Textures/black.png

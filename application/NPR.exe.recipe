@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>C:\Users\Overlord\Documents\GitHub\NPRcpp\Release\NPR.exe</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\Users\Overlord\Documents\GitHub\NPRcpp\shaders\default-fs.glsl</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\Overlord\Documents\GitHub\NPRcpp\shaders\default-vs.glsl</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\Overlord\Documents\GitHub\NPRcpp\shaders\gBuffer-vs.glsl</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\Overlord\Documents\GitHub\NPRcpp\shaders\outlineCross-fs.glsl</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\Overlord\Documents\GitHub\NPRcpp\shaders\phong-fs.glsl</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\Overlord\Documents\GitHub\NPRcpp\shaders\tonemapping-fs.glsl</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\Overlord\Documents\GitHub\NPRcpp\shaders\toScreen.glsl</FullPath>
+    </ContentFile>
+  </ContentFiles>
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

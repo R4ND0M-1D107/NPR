@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<scene name="test">
+	<shaders>
+		<shader name="default" path="./Prefabs/Shaders/object.shader"/>
+		<shader name="rma" path="./Prefabs/Shaders/rma.shader"/>
+		<shader name="pointShadow" path="./Prefabs/Shaders/pointShadow.shader" gs="shaders/pointShadow-gs.glsl"/>
+		<shader name="dirShadow" path="./Prefabs/Shaders/dirShadow.shader"/>
+	</shaders>
+	<materials>
+		<material name="concrete" path="./Prefabs/Materials/concrete1.mat"/>
+		<material name="ceramic" path="./Prefabs/Materials/ceramic.mat"/>
+	</materials>
+	<meshes>
+		<mesh name="teapot" path="./Models/teapot.obj"/>
+		<mesh name="floor" path="./Models/Stylyzed/floor.fbx"/>
+		<mesh name="s_teapot" path="./Models/teapot.obj"/>
+		<mesh name="s_floor" path="./Models/Stylyzed/floor.fbx"/>
+	</meshes>
+	<gameObjects>
+		<gameObject name="Player">
+			<transform>
+				<position x="0" y="0" z="0"/>
+				<rotation x="90" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<camera/>
+			<playerMovement/>
+			<cameraController/>
+		</gameObject>
+		<gameObject name="Light1">
+			<transform>
+				<position x="0" y="2" z="-0.75"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<light type="directional">
+				<color r="1.0" g="0.945" b="0.878"/>
+				<distribution x="0.1" y="0.3" z="1.0"/>
+				<point bool="0.0"/>
+				<direction x="0.0" y="1.0" z="1.5"/>
+				<cosCutOff value="0.0"/>
+				<exponent value="0.0"/>
+			</light>
+		</gameObject>
+		<gameObject name="floor">
+			<transform>
+				<position x="0" y="1" z="0"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="3" y="3" z="3"/>
+			</transform>		
+			<renderer shader="rma" material="concrete" mesh="floor"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+		</gameObject>
+		<gameObject name="teapot">
+			<transform>
+				<position x="0" y="2" z="0"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<renderer shader="default" material="ceramic" mesh="teapot"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_teapot"/>
+			<rotator/>
+		</gameObject>
+	</gameObjects>
+</scene>

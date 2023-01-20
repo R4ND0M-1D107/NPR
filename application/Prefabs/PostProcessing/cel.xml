@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<postProcessing>
+		<effect shader="./Prefabs/Shaders/cel.shader" material="./Prefabs/Materials/phong.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/OutlineCross.shader" material="./Prefabs/Materials/outlineCross1.mat"/>
+		<effect shader="./Prefabs/Shaders/lightComposition.shader" material="./Prefabs/Materials/gBuffer.mat"/>
+</postProcessing>
