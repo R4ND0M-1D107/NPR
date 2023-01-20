@@ -5,7 +5,7 @@
 #include "Material.h"
 #include "../Components/Light.h"
 
-const int _MaxLights = 4;
+const int _MaxLights = 3;
 
 class Shader
 {
@@ -21,8 +21,11 @@ private:
 		GLuint cutoff;
 		GLuint exponent;
 		GLuint shadowCubemap;
+		GLuint shadowMap;
+		GLuint mat;
 	} lights[_MaxLights];
 	GLuint viewerPos;
+	GLuint passedLights;
 	void SetLights(std::vector<Light*> lightComponents, int j);
 	void DeserializeLocations(std::ifstream &file);
 public:

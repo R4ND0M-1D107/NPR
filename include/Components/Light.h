@@ -22,6 +22,8 @@ public:
 	float cosCutOff;
 	float exponent; //spotExponent or attenuation
 	GLuint shadowMap;
+	GLuint shadowCubemap;
+	glm::mat4 mat;
 	static std::vector<Light*> GetAllLights();
 	static void ClearLights();
 	virtual void ComputeShadows();

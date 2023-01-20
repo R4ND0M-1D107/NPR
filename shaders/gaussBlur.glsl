@@ -37,10 +37,5 @@ void main()
 { 
     vec3 color = blur(direction, emissionTexture, width, height);
     
-    fragmentColor = vec4(texture(screenTexture, UV).xyz, 1.0);
-    normalColor = vec4(texture(normalTexture, UV).xyz, 1.0);
     emissionColor = vec4(color, 1.0);
-    maskColor = vec4(texture(maskTexture, UV).xyz, 1.0);
-    posColor = vec4(texture(posTexture, UV).xyz, 1.0);
-    uvColor = vec4(texture(uvTexture, UV).xyz, 1.0);
 }

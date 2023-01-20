@@ -7,6 +7,7 @@
 #include "../include/Components/GameObject.h"
 #include "../include/Components/Renderer.h"
 #include "../include/Components/PlayerMovement.h"
+#include "../include/Components/Rotator.h"
 #include "../include/Components/Camera.h"
 #include "../include/Components/CameraController.h"
 #include "../include/Components/Light.h"
@@ -14,6 +15,7 @@
 #include "../include/DeferredRendering.h"
 #include "../include/RenderingManager.h"
 #include "../include/UpdateManager.h"
+#include "../include/Components/DirectionalLight.h"
 
 std::map<std::string, Shader*> shaders;
 std::map<std::string, Material*> materials;
@@ -107,65 +109,88 @@ void DeserializeMeshes(pugi::xml_node meshesNode)
 	}
 }
 
+GameObject* CreateGO(pugi::xml_node gameObjectNode, GameObject* parent)
+{
+	GameObject* gameObject = new GameObject();
+	gameObject->parent = parent;
+	cache.push_back(gameObject);
+
+	for (pugi::xml_node component : gameObjectNode.children())
+	{
+		std::string type = component.name();
+		if (type == "transform")
+		{
+			gameObject->transform->position = glm::vec3(component.child("position").attribute("x").as_float(), component.child("position").attribute("y").as_float(), component.child("position").attribute("z").as_float());
+			gameObject->transform->rotation = glm::vec3(component.child("rotation").attribute("x").as_float(), component.child("rotation").attribute("y").as_float(), component.child("rotation").attribute("z").as_float());
+			gameObject->transform->scale = glm::vec3(component.child("scale").attribute("x").as_float(), component.child("scale").attribute("y").as_float(), component.child("scale").attribute("z").as_float());
+		}
+		else if (type == "camera")
+		{
+			Camera* camera = new Camera(gameObject);
+		}
+		else if (type == "playerMovement")
+		{
+			PlayerMovement* playerMovement = new PlayerMovement(gameObject);
+		}
+		else if (type == "cameraController")
+		{
+			CameraController* cameraController = new CameraController(gameObject);
+		}
+		else if (type == "renderer")
+		{
+			Mesh* mesh = meshes[(std::string)component.attribute("mesh").as_string()];
+			Shader* shader = shaders[(std::string)component.attribute("shader").as_string()];
+			Material* material = materials[(std::string)component.attribute("material").as_string()];
+			Renderer* renderer = new Renderer(gameObject, shader, material, mesh);
+		}
+		else if (type == "light")
+		{
+			std::string lightType = component.attribute("type").as_string();
+			if (lightType == "point")
+			{
+				PointLight* light = new PointLight(gameObject, component);
+			}
+			if (lightType == "directional")
+			{
+				DirectionalLight* light = new DirectionalLight(gameObject, component);
+			}
+			else
+			{
+				printf("Would you kindly implement %s light before trying to use it", component.attribute("type").as_string());
+			}
+		}
+		else if (type == "shadowRenderer")
+		{
+			Mesh* mesh = meshes[(std::string)component.attribute("mesh").as_string()];
+			Shader* pShader = shaders[(std::string)component.attribute("pointShader").as_string()];
+			Shader* dirShader = shaders[(std::string)component.attribute("dirShader").as_string()];
+			ShadowRenderer* renderer = new ShadowRenderer(gameObject, pShader, dirShader, mesh);
+		}
+		else if (type == "rotator")
+		{
+			Rotator* rot = new Rotator(gameObject);
+		}
+		else if(type == "children")
+		{
+			for(pugi::xml_node child : component.children())
+			{
+				CreateGO(child, gameObject);
+			}
+		}
+		else
+		{
+			printf("Error: undefined component - %s\n", type);
+		}
+	}
+
+	return gameObject;
+}
+
 void DeserializeGameObjects(pugi::xml_node gameObjectsNode)
 {
 	for (pugi::xml_node gameObjectNode : gameObjectsNode.children())
 	{
-		GameObject* gameObject = new GameObject();
-		cache.push_back(gameObject);
-
-		for (pugi::xml_node component : gameObjectNode.children())
-		{
-			std::string type = component.name();
-			if (type == "transform")
-			{
-				gameObject->transform->position = glm::vec3(component.child("position").attribute("x").as_float(), component.child("position").attribute("y").as_float(), component.child("position").attribute("z").as_float());
-				gameObject->transform->rotation = glm::vec3(component.child("rotation").attribute("x").as_float(), component.child("rotation").attribute("y").as_float(), component.child("rotation").attribute("z").as_float());
-				gameObject->transform->scale = glm::vec3(component.child("scale").attribute("x").as_float(), component.child("scale").attribute("y").as_float(), component.child("scale").attribute("z").as_float());
-			}
-			else if (type == "camera")
-			{
-				Camera* camera = new Camera(gameObject);
-			}
-			else if (type == "playerMovement")
-			{
-				PlayerMovement* playerMovement = new PlayerMovement(gameObject);
-			}
-			else if (type == "cameraController")
-			{
-				CameraController* cameraController = new CameraController(gameObject);
-			}
-			else if (type == "renderer")
-			{
-				Mesh* mesh = meshes[(std::string)component.attribute("mesh").as_string()];
-				Shader* shader = shaders[(std::string)component.attribute("shader").as_string()];
-				Material* material = materials[(std::string)component.attribute("material").as_string()];
-				Renderer* renderer = new Renderer(gameObject, shader, material, mesh);
-			}
-			else if (type == "light")
-			{
-				std::string lightType = component.attribute("type").as_string();
-				if (lightType == "point")
-				{
-					PointLight* light = new PointLight(gameObject, component);
-				}
-				else
-				{
-					printf("Would you kindly implement %s light before trying to use it", component.attribute("type").as_string());
-				}
-
-			}
-			else if (type == "shadowRenderer")
-			{
-				Mesh* mesh = meshes[(std::string)component.attribute("mesh").as_string()];
-				Shader* shader = shaders[(std::string)component.attribute("shader").as_string()];
-				ShadowRenderer* renderer = new ShadowRenderer(gameObject, shader, mesh);
-			}
-			else
-			{
-				printf("Error: undefined component - %s\n", type);
-			}
-		}
+		CreateGO(gameObjectNode, nullptr);
 	}
 }
 
@@ -176,7 +201,6 @@ void Deserialize(std::string fileName)
 	std::cout << "Load result: " << result.description() << std::endl;
 
 	pugi::xml_node scene = doc.child("scene");
-	setPostProcessingShaders(scene.child("postProcessing"));
 	DeserializeShaders(scene.child("shaders"));
 	DeserializeMaterials(scene.child("materials"));
 	DeserializeMeshes(scene.child("meshes"));

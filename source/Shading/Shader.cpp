@@ -16,10 +16,12 @@ void Shader::SetupLights()
 		this->lights[i].direction = glGetUniformLocation(this->program, ("lights[" + idx + "].direction").c_str());
 		this->lights[i].cutoff = glGetUniformLocation(this->program, ("lights[" + idx + "].cutoff").c_str());
 		this->lights[i].exponent = glGetUniformLocation(this->program, ("lights[" + idx + "].exponent").c_str());
-		this->viewerPos = glGetUniformLocation(this->program, "viewerPosition");
 		this->lights[i].shadowCubemap = glGetUniformLocation(this->program, ("lights[" + idx + "].shadowCubemap").c_str());
-		printf("cubemap pos %d\n", this->lights[i].shadowCubemap);
+		this->lights[i].shadowMap = glGetUniformLocation(this->program, ("lights[" + idx + "].shadowMap").c_str());
+		this->lights[i].mat = glGetUniformLocation(this->program, ("lights[" + idx + "].lightSpaceMat").c_str());
+		//printf("cubemap pos %d\n", this->lights[i].shadowCubemap);
 	}
+	this->viewerPos = glGetUniformLocation(this->program, "viewerPosition");
 }
 
 void Shader::DeserializeLocations(std::ifstream &file)
@@ -148,7 +150,8 @@ Shader::~Shader()
 
 void Shader::SetLights(std::vector<Light*> lightComponents, int j)
 {
-	for (int i = 0; i < lightComponents.size() && i < _MaxLights; i++)
+	int i = 0;
+	for (; i < _MaxLights && i < lightComponents.size(); i++)
 	{
 		glUniform3fv(lights[i].color, 1, glm::value_ptr(lightComponents[i]->color));
 		glUniform3fv(lights[i].distribution, 1, glm::value_ptr(lightComponents[i]->distribution));
@@ -157,9 +160,32 @@ void Shader::SetLights(std::vector<Light*> lightComponents, int j)
 		glUniform1f(lights[i].cutoff, lightComponents[i]->cosCutOff);
 		glUniform1f(lights[i].exponent, lightComponents[i]->exponent);
 		glActiveTexture(GL_TEXTURE0+j);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, lightComponents[i]->shadowMap);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, lightComponents[i]->shadowCubemap);
 		glUniform1i(lights[i].shadowCubemap, j);
 		j++;
+		glActiveTexture(GL_TEXTURE0 + j);
+		glBindTexture(GL_TEXTURE_2D, lightComponents[i]->shadowMap);
+		glUniform1i(lights[i].shadowMap, j);
+		j++;
+		glUniformMatrix4fv(lights[i].mat, 1, GL_FALSE, glm::value_ptr(lightComponents[i]->mat));
+	}
+	for (; i < _MaxLights; i++)
+	{
+		glUniform3fv(lights[i].color, 1, glm::value_ptr(glm::vec3(0)));
+		glUniform3fv(lights[i].distribution, 1, glm::value_ptr(glm::vec3(0)));
+		glUniform4fv(lights[i].position, 1, glm::value_ptr(glm::vec4(0)));
+		glUniform3fv(lights[i].direction, 1, glm::value_ptr(glm::vec3(0)));
+		glUniform1f(lights[i].cutoff, 0);
+		glUniform1f(lights[i].exponent, 0);
+		glActiveTexture(GL_TEXTURE0+j);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+		glUniform1i(lights[i].shadowCubemap, j);
+		j++;
+		glActiveTexture(GL_TEXTURE0 + j);
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glUniform1i(lights[i].shadowMap, j);
+		j++;
+		glUniformMatrix4fv(lights[i].mat, 1, GL_FALSE, glm::value_ptr(glm::mat4(1)));
 	}
 }
 
@@ -194,4 +220,6 @@ void Shader::UseMaterial(Material* material)
 		this->SetLights(Light::GetAllLights(), i);
 		glUniform3fv(viewerPos, 1, glm::value_ptr(GetCameraPosition())); 
 	}
+
+	CHECK_GL_ERROR();
 }

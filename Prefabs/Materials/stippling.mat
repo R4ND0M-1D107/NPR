@@ -1,0 +1,11 @@
+texture screenTexture Textures/black.png
+texture normalTexture Textures/black.png
+texture depthTexture Textures/black.png
+texture emissionTexture Textures/black.png
+texture maskTexture Textures/black.png
+texture posTexture Textures/black.png
+texture uvTexture Textures/black.png
+float height 0
+float width 0
+float intensity 0.5
+float scale 0.5

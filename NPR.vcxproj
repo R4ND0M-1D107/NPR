@@ -35,7 +35,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
@@ -156,6 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Components\DirectionalLight.cpp" />
     <ClCompile Include="include\pugixml\pugixml.cpp" />
     <ClCompile Include="Models\sphere.cpp" />
     <ClCompile Include="source\Components\Camera.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="source\Components\PlayerMovement.cpp" />
     <ClCompile Include="source\Components\PointLight.cpp" />
     <ClCompile Include="source\Components\Renderer.cpp" />
+    <ClCompile Include="source\Components\Rotator.cpp" />
     <ClCompile Include="source\Components\ShadowRenderer.cpp" />
     <ClCompile Include="source\Components\Transform.cpp" />
     <ClCompile Include="source\DeferredRendering.cpp" />
@@ -188,6 +190,7 @@
     <ClInclude Include="include\Components\PlayerMovement.h" />
     <ClInclude Include="include\Components\PointLight.h" />
     <ClInclude Include="include\Components\Renderer.h" />
+    <ClInclude Include="include\Components\Rotator.h" />
     <ClInclude Include="include\Components\ShadowRenderer.h" />
     <ClInclude Include="include\Components\SpotLight.h" />
     <ClInclude Include="include\Components\Transform.h" />

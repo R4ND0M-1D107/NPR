@@ -41,12 +41,14 @@ void finalizeApplication(void) {
 void initApplication()
 {
 	loadScene("./Prefabs/Scenes/garage.xml");
+	setPostProcessingShaders("./Prefabs/PostProcessing/real.xml");
 
 	glutSetCursor(GLUT_CURSOR_NONE);
 
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	glEnable(GL_MULTISAMPLE);
+	//glEnable(GL_CULL_FACE);
 }
 
 int main(int argc, char** argv)

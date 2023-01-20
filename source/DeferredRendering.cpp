@@ -53,11 +53,16 @@ void setupQuad()
 	glVertexAttribPointer(toScreenShader.first->locations["vertexUV"], 2, GL_FLOAT, GL_FALSE, quadNAttribsPerVertex * sizeof(float), (void*)(2 * sizeof(float)));
 }
 
-void setPostProcessingShaders(pugi::xml_node xmlNode)
+void setPostProcessingShaders(std::string fileName)
 {
 	//return;
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file(fileName.c_str());
+	//std::cout << "Load result: " << result.description() << std::endl;
+	pugi::xml_node pp = doc.child("postProcessing");
+
 	ppShaders.clear();
-	for (pugi::xml_node effectNode : xmlNode.children())
+	for (pugi::xml_node effectNode : pp.children())
 	{
 		Shader* s = new Shader(effectNode.attribute("shader").as_string());
 		Material* m = new Material(effectNode.attribute("material").as_string());
@@ -68,7 +73,7 @@ void setPostProcessingShaders(pugi::xml_node xmlNode)
 void bindColorTexture(GBuffer buff)
 {
 	glBindTexture(GL_TEXTURE_2D, buff.texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0, GL_RGB, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0, GL_RGB, GL_FLOAT, NULL);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -272,11 +277,6 @@ void swapGBuffer(GBuffer buff)
 
 	glBindFramebuffer(GL_FRAMEBUFFER, buff.FBO);
 
-	CHECK_GL_ERROR();
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	CHECK_GL_ERROR();
-	glClear(GL_COLOR_BUFFER_BIT);
-
 	GLenum buffs[6] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5 };
 	glDrawBuffers(6, buffs);
 
@@ -312,8 +312,11 @@ int postProcessing(int renderPass)
 		glUseProgram(ppShader.first->program);
 		SetupGBufferMaterial(ppShader.second, (renderPass % 2 == 1 ? gBuffer1 : gBuffer));
 		ppShader.first->UseMaterial(ppShader.second);
+		CHECK_GL_ERROR();
 		glBindVertexArray(gBuffer.VAO);
+		CHECK_GL_ERROR();
 		glDrawArrays(GL_TRIANGLES, 0, 6);
+		CHECK_GL_ERROR();
 		glBindVertexArray(0);
 		CHECK_GL_ERROR();
 

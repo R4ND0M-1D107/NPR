@@ -1,0 +1,611 @@
+<?xml version="1.0"?>
+<scene name="test">
+	<shaders>
+		<shader name="default" path="./Prefabs/Shaders/object.shader"/>
+		<shader name="pointShadow" path="./Prefabs/Shaders/pointShadow.shader" gs="shaders/pointShadow-gs.glsl"/>
+		<shader name="dirShadow" path="./Prefabs/Shaders/dirShadow.shader"/>
+		<shader name="rma" path="./Prefabs/Shaders/rma.shader"/>
+	</shaders>
+	<materials>
+		<material name="car" path="./Prefabs/Materials/car.mat"/>
+		<material name="wood" path="./Prefabs/Materials/wood.mat"/>
+		<material name="roof" path="./Prefabs/Materials/wood.mat"/>
+		<material name="concrete" path="./Prefabs/Materials/concrete1.mat"/>
+		<material name="gar_door" path="./Prefabs/Materials/garDoor.mat"/>
+		<material name="brick" path="./Prefabs/Materials/brick.mat"/>
+		<material name="barrel" path="./Prefabs/Materials/wood.mat"/>
+		<material name="barrel_rings" path="./Prefabs/Materials/metal.mat"/>
+	</materials>
+	<meshes>
+		<mesh name="car" path="./Models/car.obj"/>
+		<mesh name="wheel" path="./Models/wheel.obj"/>
+		<mesh name="roof_flat" path="./Models/Stylyzed/roof_flat.fbx"/>
+		<mesh name="roof_curved" path="./Models/Stylyzed/roof_curved.fbx"/>
+		<mesh name="roof_curver_corner_outer" path="./Models/Stylyzed/roof_curved_corner_outter.fbx"/>
+		<mesh name="floor" path="./Models/Stylyzed/floor.fbx"/>
+		<mesh name="garage_wall" path="./Models/Stylyzed/wall_door_garage.fbx"/>
+		<mesh name="garage_door" path="./Models/Stylyzed/door_garage.fbx"/>
+		<mesh name="wall" path="./Models/Stylyzed/wall.fbx"/>
+		<mesh name="barrel" path="./Models/barrel.fbx"/>
+		<mesh name="barrel_rings" path="./Models/barrelRings.fbx"/>
+		<mesh name="s_barrel" path="./Models/barrel.fbx"/>
+		<mesh name="s_barrel_rings" path="./Models/barrelRings.fbx"/>
+		<mesh name="s_wall" path="./Models/Stylyzed/wall.fbx"/>
+		<mesh name="s_floor" path="./Models/Stylyzed/floor.fbx"/>
+		<mesh name="s_car" path="./Models/car.obj"/>
+		<mesh name="s_wheel" path="./Models/wheel.obj"/>
+		<mesh name="s_garage_wall" path="./Models/Stylyzed/wall_door_garage.fbx"/>
+		<mesh name="s_garage_door" path="./Models/Stylyzed/door_garage.fbx"/>
+	</meshes>
+	<gameObjects>
+		<gameObject name="Roof">
+			<transform>
+				<position x="-2" y="3.5" z="-2"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<children>
+				<gameObject name="roof1">
+					<transform>
+						<position x="0" y="0" z="0"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_flat"/>
+				</gameObject>
+				<gameObject name="roof2">
+					<transform>
+						<position x="4" y="0" z="0"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_flat"/>
+				</gameObject>
+				<gameObject name="roof3">
+					<transform>
+						<position x="0" y="0" z="4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_flat"/>
+				</gameObject>
+				<gameObject name="roof4">
+					<transform>
+						<position x="4" y="0" z="4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_flat"/>
+				</gameObject>
+				<gameObject name="roofCorner1">
+					<transform>
+						<position x="6" y="-3" z="8"/>
+						<rotation x="0" y="180" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curver_corner_outer"/>
+				</gameObject>
+				<gameObject name="roofCorner2">
+					<transform>
+						<position x="-4" y="-3" z="6"/>
+						<rotation x="0" y="90" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curver_corner_outer"/>
+				</gameObject>
+				<gameObject name="roofCorner3">
+					<transform>
+						<position x="-2" y="-3" z="-4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curver_corner_outer"/>
+				</gameObject>
+				<gameObject name="roofCorner4">
+					<transform>
+						<position x="8" y="-3" z="-2"/>
+						<rotation x="0" y="270" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curver_corner_outer"/>
+				</gameObject>
+				<gameObject name="roofEdge1">
+					<transform>
+						<position x="6" y="-3" z="0"/>
+						<rotation x="0" y="270" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curved"/>
+				</gameObject>
+				<gameObject name="roofEdge2">
+					<transform>
+						<position x="6" y="-3" z="4"/>
+						<rotation x="0" y="270" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curved"/>
+				</gameObject>
+				<gameObject name="roofEdge3">
+					<transform>
+						<position x="-2" y="-3" z="0"/>
+						<rotation x="0" y="90" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curved"/>
+				</gameObject>
+				<gameObject name="roofEdge4">
+					<transform>
+						<position x="-2" y="-3" z="4"/>
+						<rotation x="0" y="90" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curved"/>
+				</gameObject>
+				<gameObject name="roofEdge5">
+					<transform>
+						<position x="4" y="-3" z="-2"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curved"/>
+				</gameObject>
+				<gameObject name="roofEdge6">
+					<transform>
+						<position x="0" y="-3" z="-2"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curved"/>
+				</gameObject>
+				<gameObject name="roofEdge7">
+					<transform>
+						<position x="4" y="-3" z="6"/>
+						<rotation x="0" y="180" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curved"/>
+				</gameObject>
+				<gameObject name="roofEdge8">
+					<transform>
+						<position x="0" y="-3" z="6"/>
+						<rotation x="0" y="180" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="roof" mesh="roof_curved"/>
+				</gameObject>
+			</children>
+		</gameObject>
+		<gameObject name="Player">
+			<transform>
+				<position x="0" y="0" z="0"/>
+				<rotation x="90" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<camera/>
+			<playerMovement/>
+			<cameraController/>
+		</gameObject>
+		<gameObject name="floor">
+			<transform>
+				<position x="-2" y="-2" z="2"/>
+				<rotation x="180" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>		
+			<renderer shader="rma" material="concrete" mesh="floor"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+			<children>
+				<gameObject name="floor1">
+					<transform>
+						<position x="4" y="0" z="0"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="8" y="0" z="0"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="0" y="0" z="0"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="-4" y="0" z="0"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="4" y="0" z="4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="0" y="0" z="4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="-4" y="0" z="4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="8" y="0" z="4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="4" y="0" z="8"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="0" y="0" z="8"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="-4" y="0" z="8"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="8" y="0" z="8"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="4" y="0" z="-4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="0" y="0" z="-4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="-4" y="0" z="-4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+				<gameObject name="floor1">
+					<transform>
+						<position x="8" y="0" z="-4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="concrete" mesh="floor"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_floor"/>
+				</gameObject>
+			</children>
+		</gameObject>
+		<gameObject name="Car">
+			<transform>
+				<position x="0" y="-1" z="0"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>		
+			<renderer shader="default" material="car" mesh="car"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_car"/>
+			<children>
+				<gameObject name="wheel1">
+					<transform>
+						<position x="0" y="-0" z="0"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="default" material="car" mesh="wheel"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wheel"/>
+				</gameObject>
+				<gameObject name="wheel2">
+					<transform>
+						<position x="0" y="-0.85" z="0"/>
+						<rotation x="180" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="default" material="car" mesh="wheel"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wheel"/>
+				</gameObject>
+				<gameObject name="wheel3">
+					<transform>
+						<position x="2.75" y="-0" z="0"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="default" material="car" mesh="wheel"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wheel"/>
+				</gameObject>
+				<gameObject name="wheel4">
+					<transform>
+						<position x="2.75" y="-0.85" z="0"/>
+						<rotation x="180" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="default" material="car" mesh="wheel"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wheel"/>
+				</gameObject>
+			</children>
+		</gameObject>
+		<gameObject name="Light1">
+			<transform>
+				<position x="0" y="0" z="-0.75"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>
+			<light type="point">
+				<color r="1.0" g="0.945" b="0.878"/>
+				<distribution x="0.8" y="0.4" z="0.2"/>
+				<point bool="1.0"/>
+				<direction x="0.0" y="0.0" z="0.0"/>
+				<cosCutOff value="0.0"/>
+				<exponent value="0.0"/>
+			</light>
+		</gameObject>
+		<gameObject name="garageWall">
+			<transform>
+				<position x="-8" y="-2" z="2"/>
+				<rotation x="0" y="0" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>		
+			<renderer shader="rma" material="brick" mesh="garage_wall"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage_wall"/>
+			<children>
+				<gameObject name="garageWall">
+					<transform>
+						<position x="0" y="0" z="-4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="garage_wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage_wall"/>
+					<children>
+						<gameObject name="garageWall">
+							<transform>
+								<position x="0" y="1" z="0"/>
+								<rotation x="0" y="0" z="0"/>
+								<scale x="1.35" y="1.35" z="1.35"/>
+							</transform>		
+							<renderer shader="rma" material="gar_door" mesh="garage_door"/>
+							<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage_door"/>
+						</gameObject>
+					</children>
+				</gameObject>
+				<gameObject name="wall">
+					<transform>
+						<position x="0" y="0" z="-8"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+				</gameObject>
+				<gameObject name="wall">
+					<transform>
+						<position x="0" y="0" z="4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+				</gameObject>
+				<gameObject name="garageWall">
+					<transform>
+						<position x="0" y="1" z="0"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1.35" y="1.35" z="1.35"/>
+					</transform>		
+					<renderer shader="rma" material="gar_door" mesh="garage_door"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage_door"/>
+				</gameObject>
+			</children>
+		</gameObject>
+		<gameObject name="garageWall">
+			<transform>
+				<position x="2" y="-2" z="8"/>
+				<rotation x="0" y="90" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>		
+			<renderer shader="rma" material="brick" mesh="wall"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+			<children>
+				<gameObject name="garageWall">
+					<transform>
+						<position x="0" y="0" z="-4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+				</gameObject>
+				<gameObject name="wall">
+					<transform>
+						<position x="0" y="0" z="-8"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+				</gameObject>
+				<gameObject name="wall">
+					<transform>
+						<position x="0" y="0" z="4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+				</gameObject>
+			</children>
+		</gameObject>
+		<gameObject name="garageWall">
+			<transform>
+				<position x="-2" y="-2" z="-8"/>
+				<rotation x="0" y="-90" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>		
+			<renderer shader="rma" material="brick" mesh="wall"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+			<children>
+				<gameObject name="garageWall">
+					<transform>
+						<position x="0" y="0" z="-4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+				</gameObject>
+				<gameObject name="wall">
+					<transform>
+						<position x="0" y="0" z="-8"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+				</gameObject>
+				<gameObject name="wall">
+					<transform>
+						<position x="0" y="0" z="4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+				</gameObject>
+			</children>
+		</gameObject>
+		<gameObject name="garageWall">
+			<transform>
+				<position x="8" y="-2" z="-2"/>
+				<rotation x="0" y="180" z="0"/>
+				<scale x="1" y="1" z="1"/>
+			</transform>		
+			<renderer shader="rma" material="brick" mesh="wall"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+			<children>
+				<gameObject name="garageWall">
+					<transform>
+						<position x="0" y="0" z="-4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+				</gameObject>
+				<gameObject name="wall">
+					<transform>
+						<position x="0" y="0" z="-8"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+				</gameObject>
+				<gameObject name="wall">
+					<transform>
+						<position x="0" y="0" z="4"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>		
+					<renderer shader="rma" material="brick" mesh="wall"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_wall"/>
+				</gameObject>
+			</children>
+		</gameObject>
+		<gameObject name="barrel">
+			<transform>
+				<position x="5" y="-1.3" z="4.7"/>
+				<rotation x="90" y="0" z="0"/>
+				<scale x="0.35" y="0.35" z="0.35"/>
+			</transform>		
+			<renderer shader="default" material="barrel" mesh="barrel"/>
+			<renderer shader="default" material="barrel_rings" mesh="barrel_rings"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_barrel"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_barrel_rings"/>
+		</gameObject>
+		<gameObject name="barrel">
+			<transform>
+				<position x="5.5" y="-1.3" z="5.8"/>
+				<rotation x="90" y="0" z="0"/>
+				<scale x="0.35" y="0.35" z="0.35"/>
+			</transform>		
+			<renderer shader="default" material="barrel" mesh="barrel"/>
+			<renderer shader="default" material="barrel_rings" mesh="barrel_rings"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_barrel"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_barrel_rings"/>
+		</gameObject>
+		<gameObject name="barrel">
+			<transform>
+				<position x="4.6" y="-1.3" z="5.4"/>
+				<rotation x="90" y="0" z="0"/>
+				<scale x="0.35" y="0.35" z="0.35"/>
+			</transform>		
+			<renderer shader="default" material="barrel" mesh="barrel"/>
+			<renderer shader="default" material="barrel_rings" mesh="barrel_rings"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_barrel"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_barrel_rings"/>
+		</gameObject>
+	</gameObjects>
+</scene>

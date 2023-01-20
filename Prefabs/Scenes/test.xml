@@ -12,11 +12,6 @@
 		<mesh name="cube" path="./Models/cube.obj"/>
 		<mesh name="floor" path="./Models/floor.obj"/>
 	</meshes>
-	<postProcessing>
-		<effect shader="./Prefabs/Shaders/phong.shader" material="./Prefabs/Materials/phong.mat"/>
-		<effect shader="./Prefabs/Shaders/Tonemapping.shader" material="./Prefabs/Materials/gBuffer.mat"/>
-		<effect shader="./Prefabs/Shaders/OutlineCross.shader" material="./Prefabs/Materials/outlineCross.mat"/>
-	</postProcessing>
 	<gameObjects>
 		<gameObject name="Player">
 			<transform>

@@ -21,4 +21,4 @@ bool createGBuffer();
 void renderIntoGBuffer();
 void executeDeferredShading();
 glm::vec3 GetCameraPosition();
-void setPostProcessingShaders(pugi::xml_node xmlNode);
+void setPostProcessingShaders(std::string fileName);

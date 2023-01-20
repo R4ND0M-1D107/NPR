@@ -13,3 +13,4 @@ void RenderingManagerClear();
 void onReshape(int width, int height);
 void SetMainCamera(Camera* camera);
 void RenderShadowCasters(std::vector<glm::mat4> projViewMats, glm::vec3 lightPos);
+void RenderShadowCasters(glm::mat4 projMat, glm::mat4 viewMat, glm::vec3 lightPos);

@@ -2,7 +2,8 @@
 <scene name="test">
 	<shaders>
 		<shader name="default" path="./Prefabs/Shaders/object.shader"/>
-		<shader name="shadow" path="./Prefabs/Shaders/shadow.shader" gs="shaders/shadow-gs.glsl"/>
+		<shader name="pointShadow" path="./Prefabs/Shaders/pointShadow.shader" gs="shaders/pointShadow-gs.glsl"/>
+		<shader name="dirShadow" path="./Prefabs/Shaders/dirShadow.shader"/>
 	</shaders>
 	<materials>
 		<material name="test" path="./Prefabs/Materials/test.mat"/>
@@ -20,7 +21,6 @@
 		<material name="light" path="./Prefabs/Materials/light.mat"/>
 	</materials>
 	<meshes>
-		<mesh name="testCube" path="./Models/testCube.obj"/>
 		<mesh name="car" path="./Models/car.obj"/>
 		<mesh name="cube" path="./Models/cube.obj"/>
 		<mesh name="floor" path="./Models/floor.obj"/>
@@ -40,7 +40,7 @@
 		<mesh name="shelf" path="./Models/shelf.obj"/>
 		<mesh name="lightBase" path="./Models/Garage/Light/lightBase.obj"/>
 		<mesh name="lightEmit" path="./Models/Garage/Light/lightEmit.obj"/>
-		<mesh name="s_testCube" path="./Models/testCube.obj"/>
+		<mesh name="sphere" path="./Models/sphere.obj"/>
 		<mesh name="s_car" path="./Models/car.obj"/>
 		<mesh name="s_cube" path="./Models/cube.obj"/>
 		<mesh name="s_floor" path="./Models/floor.obj"/>
@@ -61,20 +61,6 @@
 		<mesh name="s_lightBase" path="./Models/Garage/Light/lightBase.obj"/>
 		<mesh name="s_lightEmit" path="./Models/Garage/Light/lightEmit.obj"/>
 	</meshes>
-	<postProcessing>
-		<effect shader="./Prefabs/Shaders/hatching.shader" material="./Prefabs/Materials/phong.mat"/>
-		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
-		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
-		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
-		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
-		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
-		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
-		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
-		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
-		<effect shader="./Prefabs/Shaders/lightComposition.shader" material="./Prefabs/Materials/gBuffer.mat"/>
-		<effect shader="./Prefabs/Shaders/Tonemapping.shader" material="./Prefabs/Materials/gBuffer.mat"/>
-		<effect shader="./Prefabs/Shaders/OutlineCross.shader" material="./Prefabs/Materials/outlineCross.mat"/>
-	</postProcessing>
 	<gameObjects>
 		<gameObject name="Player">
 			<transform>
@@ -97,11 +83,11 @@
 			<renderer shader="default" material="woodCyan" mesh="counter-door"/>
 			<renderer shader="default" material="metal" mesh="counter-handles"/>
 			<renderer shader="default" material="woodWhite" mesh="counter-top"/>
-			<shadowRenderer shader="shadow" mesh="s_counter-base"/>
-			<shadowRenderer shader="shadow" mesh="s_counter-wood"/>
-			<shadowRenderer shader="shadow" mesh="s_counter-door"/>
-			<shadowRenderer shader="shadow" mesh="s_counter-handles"/>
-			<shadowRenderer shader="shadow" mesh="s_counter-top"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_counter-base"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_counter-wood"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_counter-door"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_counter-handles"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_counter-top"/>
 		</gameObject>
 		<gameObject name="Garage">
 			<transform>
@@ -117,47 +103,49 @@
 			<renderer shader="default" material="wood" mesh="garage-supports"/>
 			<renderer shader="default" material="plaster" mesh="garage-wall"/>
 			<renderer shader="default" material="metal" mesh="garage-window"/>
-			<shadowRenderer shader="shadow" mesh="s_garage-concrete"/>
-			<shadowRenderer shader="shadow" mesh="s_garage-door"/>
-			<shadowRenderer shader="shadow" mesh="s_garage-doorknob"/>
-			<shadowRenderer shader="shadow" mesh="s_garage-sidedoor"/>
-			<shadowRenderer shader="shadow" mesh="s_garage-roof"/>
-			<shadowRenderer shader="shadow" mesh="s_garage-supports"/>
-			<shadowRenderer shader="shadow" mesh="s_garage-wall"/>
-			<shadowRenderer shader="shadow" mesh="s_garage-window"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-concrete"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-door"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-doorknob"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-sidedoor"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-roof"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-supports"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-wall"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_garage-window"/>
 		</gameObject>
-		<gameObject name="CeilingLight1">
+		<gameObject name="CeilingLights">
 			<transform>
-				<position x="0" y="0" z="0"/>
+				<position x="0" y="" z="0"/>
 				<rotation x="0" y="0" z="0"/>
 				<scale x="1" y="1" z="1"/>
 			</transform>
 			<renderer shader="default" material="metal" mesh="lightBase"/>
 			<renderer shader="default" material="light" mesh="lightEmit"/>
-			<shadowRenderer shader="shadow" mesh="s_lightBase"/>
-			<shadowRenderer shader="shadow" mesh="s_lightEmit"/>
-		</gameObject>
-		<gameObject name="CeilingLight2">
-			<transform>
-				<position x="0" y="0" z="3.1"/>
-				<rotation x="0" y="0" z="0"/>
-				<scale x="1" y="1" z="1"/>
-			</transform>
-			<renderer shader="default" material="metal" mesh="lightBase"/>
-			<renderer shader="default" material="light" mesh="lightEmit"/>
-			<shadowRenderer shader="shadow" mesh="s_lightBase"/>
-			<shadowRenderer shader="shadow" mesh="s_lightEmit"/>
-		</gameObject>
-		<gameObject name="CeilingLight3">
-			<transform>
-				<position x="0" y="0" z="-4.8"/>
-				<rotation x="0" y="0" z="0"/>
-				<scale x="1" y="1" z="1"/>
-			</transform>
-			<renderer shader="default" material="metal" mesh="lightBase"/>
-			<renderer shader="default" material="light" mesh="lightEmit"/>
-			<shadowRenderer shader="shadow" mesh="s_lightBase"/>
-			<shadowRenderer shader="shadow" mesh="s_lightEmit"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightBase"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightEmit"/>
+			<children>
+				<gameObject name="CeilingLight2">
+					<transform>
+						<position x="0" y="0" z="3.1"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>
+					<renderer shader="default" material="metal" mesh="lightBase"/>
+					<renderer shader="default" material="light" mesh="lightEmit"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightBase"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightEmit"/>
+				</gameObject>
+				<gameObject name="CeilingLight3">
+					<transform>
+						<position x="0" y="0" z="-4.8"/>
+						<rotation x="0" y="0" z="0"/>
+						<scale x="1" y="1" z="1"/>
+					</transform>
+					<renderer shader="default" material="metal" mesh="lightBase"/>
+					<renderer shader="default" material="light" mesh="lightEmit"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightBase"/>
+					<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_lightEmit"/>
+				</gameObject>
+			</children>
 		</gameObject>
 		<gameObject name="Light1">
 			<transform>
@@ -167,7 +155,7 @@
 			</transform>
 			<light type="point">
 				<color r="1.0" g="0.945" b="0.878"/>
-				<distribution x="0.3" y="0.5" z="1.0"/>
+				<distribution x="0.4" y="0.7" z="1.0"/>
 				<point bool="1.0"/>
 				<direction x="0.0" y="0.0" z="0.0"/>
 				<cosCutOff value="0.0"/>
@@ -182,7 +170,7 @@
 			</transform>
 			<light type="point">
 				<color r="1.0" g="0.945" b="0.878"/>
-				<distribution x="0.3" y="0.5" z="1.0"/>
+				<distribution x="0.4" y="0.7" z="1.0"/>
 				<point bool="1.0"/>
 				<direction x="0.0" y="0.0" z="0.0"/>
 				<cosCutOff value="0.0"/>
@@ -197,7 +185,7 @@
 			</transform>
 			<light type="point">
 				<color r="1.0" g="0.945" b="0.878"/>
-				<distribution x="0.3" y="0.5" z="1.0"/>
+				<distribution x="0.4" y="0.7" z="1.0"/>
 				<point bool="1.0"/>
 				<direction x="0.0" y="0.0" z="0.0"/>
 				<cosCutOff value="0.0"/>
@@ -211,7 +199,7 @@
 				<scale x="1" y="1" z="1"/>
 			</transform>		
 			<renderer shader="default" material="metal" mesh="shelf"/>
-			<shadowRenderer shader="shadow" mesh="s_shelf"/>
+			<shadowRenderer pointShader="pointShadow" dirShader="dirShadow" mesh="s_shelf"/>
 		</gameObject>
 	</gameObjects>
 </scene>

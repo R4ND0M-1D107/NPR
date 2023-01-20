@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<postProcessing>
+		<effect shader="./Prefabs/Shaders/phong.shader" material="./Prefabs/Materials/phong.mat"/>
+		<effect shader="./Prefabs/Shaders/hatching.shader" material="./Prefabs/Materials/phong.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
+		<effect shader="./Prefabs/Shaders/lightComposition.shader" material="./Prefabs/Materials/gBuffer.mat"/>
+		<effect shader="./Prefabs/Shaders/Tonemapping.shader" material="./Prefabs/Materials/gBuffer.mat"/>
+		<effect shader="./Prefabs/Shaders/OutlineCross.shader" material="./Prefabs/Materials/outlineCross.mat"/>
+</postProcessing>

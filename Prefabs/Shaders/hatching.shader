@@ -17,4 +17,3 @@ uniform 5 height
 uniform 6 maskTexture
 uniform 7 posTexture
 uniform 8 uvTexture
-lights 0 light

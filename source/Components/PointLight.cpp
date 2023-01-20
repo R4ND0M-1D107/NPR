@@ -9,8 +9,8 @@ PointLight::PointLight(GameObject* owner, pugi::xml_node xmlNode) : Light(owner,
 {
     glGenFramebuffers(1, &shadowFBO);
 
-    glGenTextures(1, &shadowMap);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, shadowMap);
+    glGenTextures(1, &shadowCubemap);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, shadowCubemap);
 
     for (unsigned int i = 0; i < 6; ++i)
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
@@ -22,7 +22,7 @@ PointLight::PointLight(GameObject* owner, pugi::xml_node xmlNode) : Light(owner,
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
     glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
-    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, shadowMap, 0);
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, shadowCubemap, 0);
    
     glDrawBuffer(GL_NONE);
     glReadBuffer(GL_NONE);
@@ -46,9 +46,9 @@ void PointLight::ComputeShadows()
     glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
     glClear(GL_DEPTH_BUFFER_BIT);
     std::vector<glm::mat4> projViewMats;
+    float aspect = (float)SHADOW_WIDTH/(float)SHADOW_HEIGHT;
     for (unsigned int i = 0; i < 6; i++)
     {
-        float aspect = (float)SHADOW_WIDTH/(float)SHADOW_HEIGHT;
         glm::mat4 projMat = glm::perspective(glm::radians(90.0f), aspect, 1.0f, 25.0f);
         glm::mat4 viewMat = glm::lookAt(this->gameObject->transform->position, this->gameObject->transform->position + directions[i].front, directions[i].up);
         projViewMats.push_back(projMat*viewMat);

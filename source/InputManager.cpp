@@ -1,6 +1,8 @@
 #include "../include/InputManager.h"
 #include <pgr.h>
 #include "../include/Scene.h"
+#include "../include/pugixml/pugixml.hpp"
+#include "../include/DeferredRendering.h"
 
 Keys keys;
 bool pressedKeys[256];
@@ -10,11 +12,58 @@ int lastMouseY = 250;
 float lastMouseUpdate = 0.0f;
 std::vector<Component*> mouseListeners;
 
+bool centering = true;
+std::string currentScene = "./Prefabs/Scenes/garage.xml";
 void keyDown(unsigned char keyPressed, int mouseX, int mouseY)
 {
+	if (keyPressed == 'z') centering = !centering;
+
 	pressedKeys[keyPressed] = true;
 
-	if(pressedKeys['r']) loadScene("./Prefabs/Scenes/garage.xml");
+	if(keyPressed == 'r') loadScene(currentScene);
+
+	if(pressedKeys['p'])
+	{
+		if(keyPressed == '1')
+		{
+			setPostProcessingShaders("./Prefabs/PostProcessing/real.xml");
+		}
+		else if(keyPressed == '2')
+		{
+			setPostProcessingShaders("./Prefabs/PostProcessing/hatch.xml");
+		}
+		else if(keyPressed == '3')
+		{
+			setPostProcessingShaders("./Prefabs/PostProcessing/stipple.xml");
+		}
+		else if (keyPressed == '4')
+		{
+			setPostProcessingShaders("./Prefabs/PostProcessing/cel.xml");
+		}
+		else if (keyPressed == '5')
+		{
+			setPostProcessingShaders("./Prefabs/PostProcessing/voronoi.xml");
+		}
+	}
+
+	if(pressedKeys['o'])
+	{
+		if(keyPressed == '1')
+		{
+			loadScene("./Prefabs/Scenes/garage.xml");
+			currentScene = "./Prefabs/Scenes/garage.xml";
+		}
+		else if(keyPressed == '2')
+		{
+			loadScene("./Prefabs/Scenes/car.xml");
+			currentScene = "./Prefabs/Scenes/car.xml";
+		}
+		else if(keyPressed == '3')
+		{
+			loadScene("./Prefabs/Scenes/teapot.xml");
+			currentScene = "./Prefabs/Scenes/teapot.xml";
+		}
+	}
 };
 
 void keyUp(unsigned char keyReleased, int mouseX, int mouseY)
@@ -100,18 +149,22 @@ void mouseMove(int mouseX, int mouseY)
 
 
 	//center cursor if it's too far
-	int height = glutGet(GLUT_WINDOW_HEIGHT);
-	int width = glutGet(GLUT_WINDOW_WIDTH);
-	if (mouseX < 100 || mouseX > width - 100) {  
-		lastMouseX = width / 2;
-		lastMouseY = height / 2;
-		glutWarpPointer(width / 2, height / 2);
+	if (centering)
+	{
+		int height = glutGet(GLUT_WINDOW_HEIGHT);
+		int width = glutGet(GLUT_WINDOW_WIDTH);
+		if (mouseX < 100 || mouseX > width - 100) {
+			lastMouseX = width / 2;
+			lastMouseY = height / 2;
+			glutWarpPointer(width / 2, height / 2);
+		}
+		else if (mouseY < 100 || mouseY > height - 100) {
+			lastMouseX = width / 2;
+			lastMouseY = height / 2;
+			glutWarpPointer(width / 2, height / 2);
+		}
 	}
-	else if (mouseY < 100 || mouseY > height - 100) {
-		lastMouseX = width / 2;
-		lastMouseY = height / 2;
-		glutWarpPointer(width / 2, height / 2);
-	}
+	
 }
 
 

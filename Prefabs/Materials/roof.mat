@@ -1,0 +1,4 @@
+texture albedoTexture Textures/Roof/roof_Albedo.tga
+texture normalTexture Textures/Roof/roof_Normal.tga
+texture emissionTexture Textures/black.png
+texture maskTexture Textures/Roof/roof_RMA.tga
