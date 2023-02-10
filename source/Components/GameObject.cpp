@@ -3,11 +3,11 @@
 GameObject::GameObject()
 {
 	transform = new Transform(this);
+	active = true;
 }
 
 GameObject::~GameObject()
 {
-	//delete transform;
 	while (children.size())
 	{
 		GameObject* obj = children.back();

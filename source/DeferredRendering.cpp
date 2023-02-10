@@ -2,6 +2,11 @@
 #include "../include/DeferredRendering.h"
 #include "../include/Shading/Shader.h"
 #include "../include/Shading/Mesh.h"
+#define STBI_MSC_SECURE_CRT
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#define __STDC_LIB_EXT1__
+#include "../include/stb_image_write.h"
+#include <ctime>
 
 //Quad
 float quadVertices[] = {
@@ -68,6 +73,10 @@ void setPostProcessingShaders(std::string fileName)
 		Material* m = new Material(effectNode.attribute("material").as_string());
 		ppShaders.push_back(std::pair<Shader*, Material*>(s, m));
 	}
+
+	Shader* s0 = new Shader("./Prefabs/Shaders/toScreen.shader");
+	Material* m0 = new Material("./Prefabs/Materials/gBuffer.mat");
+	toScreenShader = std::pair<Shader*, Material*>(s0, m0);
 }
 
 void bindColorTexture(GBuffer buff)
@@ -325,6 +334,35 @@ int postProcessing(int renderPass)
 	return renderPass;
 }
 
+
+bool screenshotQueued = false;
+void queueScreenshot()
+{
+	screenshotQueued = true;
+}
+
+void screenshot()
+{
+	if (!screenshotQueued) return;
+	screenshotQueued = false;
+	int width = glutGet(GLUT_WINDOW_WIDTH);
+	int height = glutGet(GLUT_WINDOW_HEIGHT);
+	static GLubyte* data = new GLubyte[3 * width * height];
+	memset(data, 0, 3 * width * height);
+
+	glReadBuffer(GL_COLOR_ATTACHMENT0);
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
+	glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	int numOfComponents = 3; // RGB
+	int strideInBytes = width * 3;
+	time_t now = time(0);
+	char utc[26];
+    ctime_s(utc,sizeof utc,&now);
+	std::string imgName = "screenshot" + std::string(utc);
+	stbi_write_png(imgName.c_str(), width, height, 3, data, width * 3);
+}
+
 void executeDeferredShading()
 {
 	glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
@@ -338,6 +376,7 @@ void executeDeferredShading()
 	glUseProgram(toScreenShader.first->program);
 	SetupGBufferMaterial(toScreenShader.second, (renderPass % 2 == 1 ? gBuffer1 : gBuffer));
 	toScreenShader.first->UseMaterial(toScreenShader.second);
+	//screenshot();
 	glBindVertexArray(gBuffer.VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

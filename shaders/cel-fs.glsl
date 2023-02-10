@@ -70,17 +70,17 @@ vec4 computeLight(Light light, vec3 n, vec3 positionWS, vec4 mask, vec3 fragColo
 	{
 		vec3 l = normalize(light.direction.xyz);
 		n = normalize(n);
-		float cosAlpha = step(0, dot(n,l));
+		float cosAlpha = max(0, dot(n,l));
+		vec3 r = reflect(-l, n);
 		vec3 v = normalize(viewerPosition - positionWS);
-		vec3 h = normalize(light.position.xyz + v); // half vector
-		float cosBeta = max(0, dot(n, h));
+		float cosBeta = max(0, dot(r, v));
 		float shininess = mask.a;
 		float specular = pow(cosBeta, shininess*shininess);
-		specular = smoothstep(0.005, 0.01, specular);
+		//specular = smoothstep(0.8, 0.85, specular);
 
 		color += light.color * light.distribution.r * fragColor * mask.g; //ambient
 		color += light.color * light.distribution.b * cosAlpha * fragColor; //diffuse
-		color += light.color * light.distribution.b * specular  * mask.r; //specualar
+		color += light.color * light.distribution.b * specular * mask.r; //specualar
 	} else if(light.position.w == 1.0)
 	{
 		vec3 l = normalize(light.position.xyz - positionWS);

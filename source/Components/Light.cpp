@@ -1,6 +1,7 @@
 #include "..\..\include\Components\Light.h"
 #include "..\..\include\Components\GameObject.h"
 #include "..\..\include\Components\Transform.h"
+#include "..\..\libs\imgui\imgui.h"
 
 std::vector<Light*> Light::activeLights = std::vector<Light*>();
 
@@ -38,4 +39,11 @@ void Light::ClearLights()
 
 void Light::ComputeShadows()
 {
+	if (!enabled) return;
+}
+
+void Light::OnGUIDraw()
+{
+	ImGui::ColorEdit3("Color", glm::value_ptr(color));
+	ImGui::DragFloat3("Distribution", glm::value_ptr(distribution));
 }

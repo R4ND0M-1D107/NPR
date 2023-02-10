@@ -1,5 +1,6 @@
 #include "..\..\include\Components\Transform.h"
 #include "..\..\include\Components\GameObject.h"
+#include "..\..\libs\imgui\imgui.h"
 
 Transform::Transform(GameObject* owner): Component(owner)
 {
@@ -25,4 +26,11 @@ glm::mat4 Transform::GetGlobalTransformMatrix()
 		localMatrix = this->gameObject->parent->transform->GetGlobalTransformMatrix() * localMatrix;
 	}
 	return localMatrix;
+}
+
+void Transform::OnGUIDraw()
+{
+	ImGui::DragFloat3("Position", glm::value_ptr(position));
+	ImGui::DragFloat3("Rotation", glm::value_ptr(rotation));
+	ImGui::DragFloat3("Scale", glm::value_ptr(scale));
 }

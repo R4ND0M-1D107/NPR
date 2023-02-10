@@ -13,14 +13,17 @@ float lastMouseUpdate = 0.0f;
 std::vector<Component*> mouseListeners;
 
 bool centering = true;
+bool looking = true;
 std::string currentScene = "./Prefabs/Scenes/garage.xml";
 void keyDown(unsigned char keyPressed, int mouseX, int mouseY)
 {
 	if (keyPressed == 'z') centering = !centering;
-
+	if (keyPressed == 'n') looking = !looking;
 	pressedKeys[keyPressed] = true;
 
 	if(keyPressed == 'r') loadScene(currentScene);
+
+	if (keyPressed == 'm') queueScreenshot();
 
 	if(pressedKeys['p'])
 	{
@@ -130,6 +133,7 @@ void RemoveMouseListener(Component* listener)
 
 void mouseMove(int mouseX, int mouseY)
 {
+	if (!looking) return;
 	float currentTime = 0.001f * (float)glutGet(GLUT_ELAPSED_TIME);
 
 	if (currentTime - lastMouseUpdate < 0.025f) return;
@@ -140,7 +144,7 @@ void mouseMove(int mouseX, int mouseY)
 	{
 		mouseListener->Update(currentTime - lastMouseUpdate);
 	}
-	
+
 	lastMouseX = mouseX;
 	lastMouseY = mouseY;
 	lastMouseUpdate = currentTime;
@@ -164,7 +168,6 @@ void mouseMove(int mouseX, int mouseY)
 			glutWarpPointer(width / 2, height / 2);
 		}
 	}
-	
 }
 
 

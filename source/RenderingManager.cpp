@@ -6,6 +6,10 @@
 #include "../include/Components/GameObject.h"
 #include "../include/Components/Transform.h"
 #include "../include/Components/Light.h"
+#include <Scene.h>
+#include <Editor/EditorManager.h>
+#include "../libs/imgui/imgui_impl_glut.h"
+#include "../libs/imgui/imgui_impl_opengl3.h"
 
 std::vector<Renderer*> renderers;
 std::vector<ShadowRenderer*> shadowRenderers;
@@ -36,11 +40,13 @@ int shadowCooldown = -1;
 void onRender()
 {
 	clock_t start = clock();
+
+
 	CHECK_GL_ERROR();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	CHECK_GL_ERROR();
-
+	
 	renderIntoGBuffer();
 	
 	glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
@@ -66,7 +72,9 @@ void onRender()
 
 
 	executeDeferredShading();
+	Editor::DrawEditor();
 	CHECK_GL_ERROR();
+
 	glutSwapBuffers();
 	CHECK_GL_ERROR();
 	glutPostRedisplay();
@@ -123,6 +131,7 @@ void onReshape(int width, int height)
 	{
 		pgr::dieWithError("unable to reshape GBuffer");
 	}
+	ImGui_ImplGLUT_ReshapeFunc(width, height);
 }
 
 void SetMainCamera(Camera* camera)

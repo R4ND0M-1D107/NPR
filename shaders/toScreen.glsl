@@ -21,7 +21,15 @@ out vec4 maskColor;
 out vec4 posColor;
 out vec4 uvColor;
 
+float near = 0.1;
+float far = 25.0;
 void main()
 { 
     fragmentColor = vec4(texture(screenTexture, UV).rgb, 1.0);
+    //fragmentColor = vec4(texture(normalTexture, UV).rgb, 1.0);
+    //fragmentColor = vec4(vec3(pow(texture(depthTexture, UV).r, 50)), 1.0);
+    //fragmentColor = vec4(texture(emissionTexture, UV).rgb, 1.0);
+    //fragmentColor = texture(maskTexture, UV).rgba;
+    //fragmentColor = vec4(texture(posTexture, UV).rgb, 1.0);
+    //fragmentColor = vec4(texture(uvTexture, UV).rgb, 1.0);
 }

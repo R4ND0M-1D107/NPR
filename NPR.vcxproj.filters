@@ -105,6 +105,39 @@
     <ClCompile Include="source\Components\Rotator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="libs\imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\imgui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\imgui\imgui_impl_glut.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\imgui\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\imgui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Editor\HierarchyWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Editor\EditorManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Editor\InspectorWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Editor\MenuBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\RenderingManager.h">
@@ -182,6 +215,48 @@
     <ClInclude Include="include\Components\Rotator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\stb_image_write.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imgui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imgui_impl_glut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imgui_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imstb_rectpack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imstb_textedit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imstb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imgui_impl_opengl3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Editor\HierarchyWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\imgui\imgui_impl_opengl3_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Editor\EditorManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Editor\InspectorWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Editor\MenuBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\gBuffer-fs.glsl">
@@ -205,6 +280,45 @@
     <None Include="shaders\phong-fs.glsl" />
     <None Include="shaders\tonemapping-fs.glsl" />
     <None Include="shaders\toScreen.glsl" />
+    <None Include="Prefabs\Shaders\voronoi.shader" />
+    <None Include="Prefabs\Shaders\cel.shader" />
+    <None Include="Prefabs\Shaders\dirShadow.shader" />
+    <None Include="Prefabs\Shaders\gaussBlur.shader" />
+    <None Include="Prefabs\Shaders\hatching.shader" />
+    <None Include="Prefabs\Shaders\lightComposition.shader" />
+    <None Include="Prefabs\Shaders\object.shader" />
+    <None Include="Prefabs\Shaders\OutlineCross.shader" />
+    <None Include="Prefabs\Shaders\phong.shader" />
+    <None Include="Prefabs\Shaders\pointShadow.shader" />
+    <None Include="Prefabs\Shaders\rma.shader" />
+    <None Include="Prefabs\Shaders\stippling.shader" />
+    <None Include="Prefabs\Shaders\Tonemapping.shader" />
+    <None Include="Prefabs\Shaders\toScreen.shader" />
+    <None Include="Prefabs\Materials\brass.mat" />
+    <None Include="Prefabs\Materials\brick.mat" />
+    <None Include="Prefabs\Materials\car.mat" />
+    <None Include="Prefabs\Materials\ceramic.mat" />
+    <None Include="Prefabs\Materials\concrete.mat" />
+    <None Include="Prefabs\Materials\concrete1.mat" />
+    <None Include="Prefabs\Materials\garDoor.mat" />
+    <None Include="Prefabs\Materials\gBuffer.mat" />
+    <None Include="Prefabs\Materials\horizontalBlur.mat" />
+    <None Include="Prefabs\Materials\light.mat" />
+    <None Include="Prefabs\Materials\metal.mat" />
+    <None Include="Prefabs\Materials\outlineCross.mat" />
+    <None Include="Prefabs\Materials\outlineCross1.mat" />
+    <None Include="Prefabs\Materials\phong.mat" />
+    <None Include="Prefabs\Materials\plaster.mat" />
+    <None Include="Prefabs\Materials\roof.mat" />
+    <None Include="Prefabs\Materials\stippling.mat" />
+    <None Include="Prefabs\Materials\stylWood.mat" />
+    <None Include="Prefabs\Materials\test.mat" />
+    <None Include="Prefabs\Materials\verticalBlur.mat" />
+    <None Include="Prefabs\Materials\wood.mat" />
+    <None Include="Prefabs\Materials\woodBlue.mat" />
+    <None Include="Prefabs\Materials\woodCyan.mat" />
+    <None Include="Prefabs\Materials\woodLight.mat" />
+    <None Include="Prefabs\Materials\woodWhite.mat" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\white.png">
@@ -417,5 +531,16 @@
     <Image Include="Textures\Skybox\bkg1_top3.png">
       <Filter>Shaders\Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Prefabs\PostProcessing\cel.xml" />
+    <Xml Include="Prefabs\PostProcessing\hatch.xml" />
+    <Xml Include="Prefabs\PostProcessing\real.xml" />
+    <Xml Include="Prefabs\PostProcessing\stipple.xml" />
+    <Xml Include="Prefabs\PostProcessing\voronoi.xml" />
+    <Xml Include="Prefabs\Scenes\test.xml" />
+    <Xml Include="Prefabs\Scenes\car.xml" />
+    <Xml Include="Prefabs\Scenes\garage.xml" />
+    <Xml Include="Prefabs\Scenes\teapot.xml" />
   </ItemGroup>
 </Project>

@@ -19,6 +19,8 @@ Renderer::~Renderer()
 
 void Renderer::Render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix)
 {
+	if (!gameObject->active) return;
+
 	glUseProgram(shader->program);
 
 	shader->SetMatrices(viewMatrix, projectionMatrix, this->gameObject->transform->GetGlobalTransformMatrix());

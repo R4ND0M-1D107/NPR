@@ -27,4 +27,5 @@ public:
 	static std::vector<Light*> GetAllLights();
 	static void ClearLights();
 	virtual void ComputeShadows();
+	virtual void OnGUIDraw();
 };

@@ -9,6 +9,9 @@
 #include "../include/Components/PlayerMovement.h"
 #include "../include/Components/CameraController.h"
 #include "../include/Scene.h"
+#include "../libs/imgui/imgui.h"
+#include "../libs/imgui/imgui_impl_glut.h"
+#include "../libs/imgui/imgui_impl_opengl3.h"
 
 void createWindow()
 {
@@ -29,26 +32,40 @@ void createWindow()
 
 void finalizeApplication(void) {
 
-	// cleanUpObjects();
-
-	// delete buffers
-	// cleanupModels();
-
-	// delete shaders
-	// cleanupShaderPrograms();
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGLUT_Shutdown();
+	ImGui::DestroyContext();
 }
 
 void initApplication()
 {
+	// Setup Dear ImGui context
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsLight();
+
+	// Setup Platform/Renderer backends
+	// FIXME: Consider reworking this example to install our own GLUT funcs + forward calls ImGui_ImplGLUT_XXX ones, instead of using ImGui_ImplGLUT_InstallFuncs().
+	ImGui_ImplGLUT_Init();
+	ImGui_ImplGLUT_InstallFuncs();
+	ImGui_ImplOpenGL3_Init();
+
 	loadScene("./Prefabs/Scenes/garage.xml");
 	setPostProcessingShaders("./Prefabs/PostProcessing/real.xml");
 
 	glutSetCursor(GLUT_CURSOR_NONE);
 
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_MULTISAMPLE);
-	//glEnable(GL_CULL_FACE);
 }
 
 int main(int argc, char** argv)

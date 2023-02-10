@@ -19,6 +19,7 @@ typedef struct _GBuffer
 
 bool createGBuffer();
 void renderIntoGBuffer();
+void queueScreenshot();
 void executeDeferredShading();
 glm::vec3 GetCameraPosition();
 void setPostProcessingShaders(std::string fileName);

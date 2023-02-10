@@ -7,4 +7,5 @@ public:
 	CameraController(GameObject* owner);
 	~CameraController();
 	void Update(float deltaTime);
+	void OnGUIDraw();
 };

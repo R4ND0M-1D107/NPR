@@ -29,4 +29,5 @@ public:
 	PointLight(GameObject* owner, pugi::xml_node xmlNode);
 	~PointLight();
 	void ComputeShadows();
+	virtual void OnGUIDraw();
 };

@@ -9,7 +9,10 @@ Mesh::Mesh(std::string file)
 		aiProcess_JoinIdenticalVertices |
 		aiProcess_SortByPType);
 	
-
+	if (scene == nullptr)
+	{
+		return;
+	}
 	objectNAttribsPerVertex = 14;
 	objectNVertices = scene->mMeshes[0]->mNumVertices;
 	objectNTriangles = scene->mMeshes[0]->mNumFaces;

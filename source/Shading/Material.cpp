@@ -7,7 +7,8 @@ Material::Material(std::string txt)
 	std::ifstream file(txt, std::ios::in);
 	if (!file)
 	{
-		pgr::dieWithError("material file doesn't exist");
+		printf("Skipping \'%s\' because material doesn't exist\n", txt);
+		//pgr::dieWithError("material file doesn't exist");
 	}
 	else
 	{
@@ -37,7 +38,7 @@ Material::Material(std::string txt)
 			}
 			else
 			{
-				pgr::dieWithError("Invalid shader definition");
+				printf("Invalid shader definition\n");
 			}
 		}
 	}

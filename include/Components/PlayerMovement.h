@@ -7,4 +7,5 @@ public:
 	PlayerMovement(GameObject* owner);
 	void Update(float deltaTime);
 	~PlayerMovement();
+	void OnGUIDraw();
 };

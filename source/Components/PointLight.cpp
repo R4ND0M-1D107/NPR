@@ -4,6 +4,7 @@
 #include "..\..\include\Components\ShadowRenderer.h"
 #include "../../include/RenderingManager.h"
 #include "pgr.h"
+#include "..\..\libs\imgui\imgui.h"
 
 PointLight::PointLight(GameObject* owner, pugi::xml_node xmlNode) : Light(owner, xmlNode)
 {
@@ -34,6 +35,8 @@ PointLight::PointLight(GameObject* owner, pugi::xml_node xmlNode) : Light(owner,
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     CHECK_GL_ERROR();
+
+    if (exponent < 0.05) exponent = 1;
 }
 
 PointLight::~PointLight()
@@ -57,4 +60,10 @@ void PointLight::ComputeShadows()
     RenderShadowCasters(projViewMats, this->gameObject->transform->position);
     CHECK_GL_ERROR();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void PointLight::OnGUIDraw()
+{
+    Light::OnGUIDraw();
+    ImGui::DragFloat("Range", &exponent, 1.0, 0.05f, 20.0f);
 }

@@ -1,4 +1,5 @@
 #include "..\..\include\Shading\Shader.h"
+#include "..\..\include\Components\GameObject.h"
 #include <fstream>
 #include <string>
 #include "Shader.h"
@@ -67,7 +68,7 @@ Shader::Shader(std::string txt, std::string geometryShader)
 	std::ifstream file(txt, std::ios::in);
 	if (!file)
 	{
-		pgr::dieWithError("shader file doesn't exist");
+		printf("Skipping \'%s\' because shader doesn't exist\n", txt);
 	}
 	else
 	{
@@ -103,7 +104,7 @@ Shader::Shader(std::string txt)
 	std::ifstream file(txt, std::ios::in);
 	if (!file)
 	{
-		pgr::dieWithError("shader file doesn't exist");
+		printf("Skipping \'%s\' because shader doesn't exist\n", txt);
 	}
 	else
 	{
@@ -151,23 +152,29 @@ Shader::~Shader()
 void Shader::SetLights(std::vector<Light*> lightComponents, int j)
 {
 	int i = 0;
-	for (; i < _MaxLights && i < lightComponents.size(); i++)
+	auto lightIterator = begin(lightComponents);
+	for (; i < _MaxLights && lightIterator != end(lightComponents); i++, lightIterator++)
 	{
-		glUniform3fv(lights[i].color, 1, glm::value_ptr(lightComponents[i]->color));
-		glUniform3fv(lights[i].distribution, 1, glm::value_ptr(lightComponents[i]->distribution));
-		glUniform4fv(lights[i].position, 1, glm::value_ptr(lightComponents[i]->getPosition()));
-		glUniform3fv(lights[i].direction, 1, glm::value_ptr(lightComponents[i]->direction));
-		glUniform1f(lights[i].cutoff, lightComponents[i]->cosCutOff);
-		glUniform1f(lights[i].exponent, lightComponents[i]->exponent);
+		if (!(*lightIterator)->enabled || !(*lightIterator)->gameObject->active)
+		{
+			i--;
+			continue;
+		}
+		glUniform3fv(lights[i].color, 1, glm::value_ptr((*lightIterator)->color));
+		glUniform3fv(lights[i].distribution, 1, glm::value_ptr((*lightIterator)->distribution));
+		glUniform4fv(lights[i].position, 1, glm::value_ptr((*lightIterator)->getPosition()));
+		glUniform3fv(lights[i].direction, 1, glm::value_ptr((*lightIterator)->direction));
+		glUniform1f(lights[i].cutoff, (*lightIterator)->cosCutOff);
+		glUniform1f(lights[i].exponent, (*lightIterator)->exponent);
 		glActiveTexture(GL_TEXTURE0+j);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, lightComponents[i]->shadowCubemap);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, (*lightIterator)->shadowCubemap);
 		glUniform1i(lights[i].shadowCubemap, j);
 		j++;
 		glActiveTexture(GL_TEXTURE0 + j);
-		glBindTexture(GL_TEXTURE_2D, lightComponents[i]->shadowMap);
+		glBindTexture(GL_TEXTURE_2D, (*lightIterator)->shadowMap);
 		glUniform1i(lights[i].shadowMap, j);
 		j++;
-		glUniformMatrix4fv(lights[i].mat, 1, GL_FALSE, glm::value_ptr(lightComponents[i]->mat));
+		glUniformMatrix4fv(lights[i].mat, 1, GL_FALSE, glm::value_ptr((*lightIterator)->mat));
 	}
 	for (; i < _MaxLights; i++)
 	{

@@ -16,6 +16,7 @@
 #include "../include/RenderingManager.h"
 #include "../include/UpdateManager.h"
 #include "../include/Components/DirectionalLight.h"
+#include "../libs/imgui/imgui.h"
 
 std::map<std::string, Shader*> shaders;
 std::map<std::string, Material*> materials;
@@ -113,7 +114,8 @@ GameObject* CreateGO(pugi::xml_node gameObjectNode, GameObject* parent)
 {
 	GameObject* gameObject = new GameObject();
 	gameObject->parent = parent;
-	cache.push_back(gameObject);
+	//cache.push_back(gameObject);
+	gameObject->name = gameObjectNode.attribute("name").as_string();
 
 	for (pugi::xml_node component : gameObjectNode.children())
 	{
@@ -174,7 +176,8 @@ GameObject* CreateGO(pugi::xml_node gameObjectNode, GameObject* parent)
 		{
 			for(pugi::xml_node child : component.children())
 			{
-				CreateGO(child, gameObject);
+				GameObject* childGO = CreateGO(child, gameObject);
+				gameObject->children.push_back(childGO);
 			}
 		}
 		else
@@ -190,8 +193,14 @@ void DeserializeGameObjects(pugi::xml_node gameObjectsNode)
 {
 	for (pugi::xml_node gameObjectNode : gameObjectsNode.children())
 	{
-		CreateGO(gameObjectNode, nullptr);
+		GameObject* gameObject = CreateGO(gameObjectNode, nullptr);
+		cache.push_back(gameObject);
 	}
+}
+
+std::vector<GameObject*> GetScene()
+{
+	return cache;
 }
 
 void Deserialize(std::string fileName)

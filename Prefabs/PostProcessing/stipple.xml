@@ -11,5 +11,6 @@
 		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/horizontalBlur.mat"/>
 		<effect shader="./Prefabs/Shaders/gaussBlur.shader" material="./Prefabs/Materials/verticalBlur.mat"/>
 		<effect shader="./Prefabs/Shaders/lightComposition.shader" material="./Prefabs/Materials/gBuffer.mat"/>
+		<effect shader="./Prefabs/Shaders/Tonemapping.shader" material="./Prefabs/Materials/gBuffer.mat"/>
 		<effect shader="./Prefabs/Shaders/OutlineCross.shader" material="./Prefabs/Materials/outlineCross.mat"/>
 </postProcessing>

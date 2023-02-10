@@ -11,4 +11,5 @@ public:
 	glm::vec3 scale;
 	glm::mat4 GetLocalTranformMatrix();
 	glm::mat4 GetGlobalTransformMatrix();
+	void OnGUIDraw();
 };
